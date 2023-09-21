@@ -1,5 +1,5 @@
 class User {
-    registretion() {
-        
-    }
+	registration() {}
+
+	login() {}
 }
