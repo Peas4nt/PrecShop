@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="author" content="Edijs Kalns" />
+    <meta name="author" content="Eduards Jākobsons" />
     <meta name="group" content="310" />
     <meta name="group_name" content="VEMEM" />
     <meta name="date_created" content="21.09.2023" />
@@ -17,9 +17,9 @@
   </head>
 
   <body>
-    <%- include("partials/navbar.ejs") %>
+    <%- include("../partials/navbar.ejs") %>
     <div class="container mt-3">
-      <h2>Imported Products</h2>
+      <h2>Exported Products</h2>
 
       <table class="table table-striped">
         <thead>
@@ -28,7 +28,8 @@
             <th>Name</th>
             <th>Product type</th>
             <th>Barcode</th>
-            <th>Importer</th>
+            <th>Exporter</th>
+            <th>Object</th>
             <th>Date</th>
             <th>Quantity</th>
           </tr>
@@ -37,6 +38,6 @@
       </table>
     </div>
 
-    <%- include("partials/footer.ejs") %>
+    <%- include("../partials/footer.ejs") %>
   </body>
 </html>
