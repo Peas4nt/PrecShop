@@ -2,7 +2,7 @@ const { Router } = require("express");
 const route = Router();
 
 route.get("/storage", (req, res) => {
-  res.render("storage", {
+  res.render("tables/storage", {
     page: "storage",
     title: "Storage",
   });
