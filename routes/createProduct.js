@@ -1,10 +1,14 @@
 const { Router } = require("express");
 const route = Router();
+const db = require("../db");
 
-route.get("/create/product", (req, res) => {
+route.get("/create/product", async (req, res) => {
+  const types = await db.getData("SELECT id,name FROM products_tips");
+  console.log(types);
   res.render("dataforms/product_create", {
     page: "product_create",
     title: "Create a new product",
+    types: types,
   });
 });
 
