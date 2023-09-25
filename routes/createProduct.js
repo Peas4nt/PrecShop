@@ -2,7 +2,7 @@ const { Router } = require("express");
 const route = Router();
 
 route.get("/create/product", (req, res) => {
-  res.render("product_create", {
+  res.render("dataforms/product_create", {
     page: "product_create",
     title: "Create a new product",
   });

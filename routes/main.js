@@ -3,7 +3,7 @@ const { Router } = require("express");
 const route = Router();
 
 route.get("/", (req, res) => {
-    res.render("main", {
+    res.render("pages/main", {
         page: "home",
         title: "Main Index",
 

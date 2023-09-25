@@ -1,8 +1,8 @@
 const { Router } = require("express");
 const route = Router();
 
-route.get("/table/importedProducts", (req, res) => {
-  res.render("importedProducts", {
+route.get("/tables/importedProducts", (req, res) => {
+  res.render("tables/importedProducts", {
     page: "importedProducts",
     title: "imported Products",
   });

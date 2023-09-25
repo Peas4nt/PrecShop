@@ -3,7 +3,7 @@ const route = Router();
 const db = require("../db");
 
 route.get("/signup", (req, res) => {
-	res.render("signup", {
+	res.render("login/signup", {
 		page: "signup",
 		title: "signup",
 	});
