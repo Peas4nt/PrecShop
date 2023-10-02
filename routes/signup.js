@@ -21,7 +21,8 @@ route.post("/signup", async (req, res) => {
       [name, lastname, email, password]
     )
     .then((result) => {
-      if (result) {
+      if (result.result) {
+        console.log(result.id);
         console.log(`User ${name} was created`);
         res.status(200).redirect("/");
       } else {
