@@ -16,17 +16,26 @@ app.use(express.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 
-// loop for routes
+// this two loops for routes reading
+// f loop read the folders
 const routesDirectory = path.join(__dirname, "routes");
-fs.readdirSync(routesDirectory).forEach((file) => {
-	const routePath = path.join(routesDirectory, file);
-	const route = require(routePath);
-	app.use(route);
+fs.readdirSync(routesDirectory).forEach((folder) => {
+	// the s read the routes
+	const routesFolder = path.join(routesDirectory, folder);
+	fs.readdirSync(routesFolder).forEach((file) => {
+		const routePath = path.join(routesFolder, file);
+		const route = require(routePath);
+		app.use(route);
+	});
 });
 
+const start = () => {
+	// connect to database
+	db.сonnectToDB();
+	// server starting
+	app.listen(PORT, () => {
+		console.log(`Server is running on port ${PORT}`);
+	});
+};
 
-
-// server starting
-app.listen(PORT, () => {
-	console.log(`Server is running on port ${PORT}`);
-});
+start();

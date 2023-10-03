@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const route = Router();
-const db = require("../db");
+const db = require("../../db");
 
 route.get("/create/product", async (req, res) => {
   const types = await db.getData("SELECT id,name FROM products_tips");

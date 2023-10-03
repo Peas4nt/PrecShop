@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const route = Router();
-const db = require("../db");
+const db = require("../../db");
 
 route.get("/storage", async (req, res) => {
 	const products = await db.getData(`

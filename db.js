@@ -8,5 +8,4 @@ const db = new DBmysql(
 	process.env.DB_PASSWORd,
 );
 
-db.сonnectToDB();
 module.exports = db;

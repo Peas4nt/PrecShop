@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const route = Router();
-const db = require("../db");
+const db = require("../../db");
 
 route.get("/check/code", async (req, res) => {
   res.render("dataforms/check_code", {

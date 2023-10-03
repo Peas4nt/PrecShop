@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const route = Router();
-const db = require("../db");
+const db = require("../../db");
 
 route.get("/signup", (req, res) => {
   res.render("login/signup", {
