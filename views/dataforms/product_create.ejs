@@ -21,9 +21,25 @@
 <body>
   <%- include("../partials/navbar.ejs") %>
 
-    <div class="container mt-3">
+
+    <div class="container mt-3 col-4">
+      <h1>
+        <%=title %>
+      </h1>
       <form action="/create/product" method="POST">
 
+        <!-- Barcode -->
+        <h2>Barcode</h2>
+        <p>Barcode already exists. You will add a product amount.</p>
+
+        <div class="mb-3 mt-3">
+          <label for="prod_name">Barcode:</label>
+          <input disabled type="text" class="form-control" id="barcode" placeholder="Enter product name"
+            name="prod_name" value="<%=barcode %>" />
+        </div>
+
+
+        <h1>Form</h1>
         <!-- Product Name -->
         <div class="mb-3 mt-3">
           <label for="prod_name">Product Name:</label>
@@ -36,11 +52,12 @@
           <label for="prod_name">Product Type:</label>
           <select class="form-select" id="prod_type" name="prod_type">
             <option value="" disabled selected>Choose your option</option>
-            <% types.forEach(element =>
-            { %> 
-              <option value = <%=element.id%>><%=element.name%></option>
+            <% types.forEach(element=>
+              { %>
+              <option value=<%=element.id%>><%=element.name%>
+              </option>
 
-            <%}) %>
+              <%}) %>
           </select>
         </div>
 

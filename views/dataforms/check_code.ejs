@@ -19,7 +19,8 @@
   <body>
     <%- include("../partials/navbar.ejs") %>
 
-    <div class="container mt-3">
+    <div class="container mt-3 col-4">
+      <h1><%=title %></h1>
       <form action="/check/code" method="POST">
         <!-- Product code -->
         <div class="mb-3 mt-3">
@@ -43,7 +44,9 @@
             Submit
           </button>
         </div>
+
       </form>
+    
     </div>
 
     <%- include("../partials/footer.ejs") %>

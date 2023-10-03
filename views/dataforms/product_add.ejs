@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Maksims Lisnojs">
+    <meta name="group" content="310">
+    <meta name="group_name" content="VEMEM">
+    <meta name="date_created" content="13.09.2023">
+    <meta name="date_modify" content="14.09.2023">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <title>
+        <%=title %>
+    </title>
+</head>
+
+
+
+<body>
+    <%- include("../partials/navbar.ejs") %>
+
+
+        <div class="container mt-3 col-4">
+            <h1>
+                <%=title %>
+            </h1>
+
+
+            <!-- Barcode -->
+            <h2>Barcode</h2>
+            <p>Barcode already exists. You will add a product amount.</p>
+
+            <div class="mb-3 mt-3">
+                <label for="prod_name">Barcode:</label>
+                <input disabled type="text" class="form-control" id="barcode" placeholder="Enter product name"
+                    name="prod_name" value="<%=barcode %>" />
+            </div>
+
+
+            <!-- Form -->
+            <h1>Form</h1>
+            <!-- Product Name and Ser Num -->
+            <div class="row mb-3">
+                <!-- Product Name -->
+                <div class="col">
+                    <label for="prod_name">Product Name:</label>
+                    <input disabled type="text" class="form-control" name="prod_name" value="<%=product.name%>"/>
+                </div>
+
+                <!-- Serial Num -->
+                <div class="col">
+                    <label for="serial_num">Serial Number:</label>
+                    <input disabled type="text" class="form-control" name="serial_num" value="<%=product.serial_num%>"/>
+                </div>
+            </div>
+
+
+
+            <!-- Type and Price -->
+            <div class="row mb-3">
+                <!-- Type -->
+                <div class="col">
+                    <label for="prod_name">Product Type:</label>
+                    <input disabled type="text" class="form-control" id="prod_type" name="prod_type" value="<%=product.tip%>"/>
+                </div>
+
+                <!-- Price -->
+                <div class="col">
+                    <label for="price">Price:</label>
+                    <input disabled type="text" id="price" class="form-control" name="price" value="<%=product.cost%>"/>
+                </div>
+            </div>
+
+
+            <form action="/add/product" method="POST">
+                <!-- Quantity and import date -->
+                <div class="row mb-3">
+                    <!-- Quantity -->
+                    <div class="col">
+                        <label for="quantity">Quantity: (now: <%=product.quantity%>)</label>
+                        <input type="text" id="quantity" class="form-control" placeholder="Enter + Quantity"
+                            name="quantity" />
+                    </div>
+
+                    <!-- Import date -->
+                    <div class="col">
+                        <label for="import_date">Import Date:</label>
+                        <input type="date" class="form-control" id="import_date" placeholder="Enter import date"
+                            name="import_date" />
+                    </div>
+                </div>
+                </br>
+
+                <input type="hidden" name="product_id" value="<%=product.id%>">
+                <!-- Submit -->
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary text" style="width: 200px">Submit</button>
+                </div>
+
+            </form>
+        </div>
+
+
+        <%- include("../partials/footer.ejs") %>
+</body>
+
+</html>
