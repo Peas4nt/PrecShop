@@ -19,6 +19,7 @@ route.post("/create/product", async (req, res) => {
   const deliverer = req.body.deliverer;
   const prodQuantity = req.body.quantity;
   const prodPrice = req.body.price;
+  console.log(prodName);
 
   res.redirect("/");
   // await db
