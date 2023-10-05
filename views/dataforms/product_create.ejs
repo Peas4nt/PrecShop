@@ -33,9 +33,9 @@
         <p>Barcode already exists. You will add a product amount.</p>
 
         <div class="mb-3 mt-3">
-          <label for="prod_name">Barcode:</label>
-          <input disabled type="text" class="form-control" id="barcode" placeholder="Enter product name"
-            name="prod_name" value="<%=barcode %>" />
+          <label for="prod_code">Barcode:</label>
+          <input readonly type="text" class="form-control" id="barcode"
+            name="prod_code" value="<%=barcode %>" />
         </div>
 
 
@@ -52,12 +52,14 @@
           <label for="prod_name">Product Type:</label>
           <select class="form-select" id="prod_type" name="prod_type">
             <option value="" disabled selected>Choose your option</option>
+
             <% types.forEach(element=>
               { %>
               <option value=<%=element.id%>><%=element.name%>
               </option>
 
               <%}) %>
+
           </select>
         </div>
 
