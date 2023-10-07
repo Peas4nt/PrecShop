@@ -30,7 +30,7 @@ route.get("/storage/:page?", async (req, res) => {
     const productsPerPage = 5;
     const productMaxPages = Math.ceil(products.length / productsPerPage);
     // current page
-    const currentPage = (req.params.page > productMaxPages || req.params.page < 1)? 1 : req.params.page;
+    const currentPage = (!req.params.page || req.params.page > productMaxPages || req.params.page < 1)? 1 : req.params.page;
 
     // array indexes
     const startIndex = (currentPage - 1) * productsPerPage;
