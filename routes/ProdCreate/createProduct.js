@@ -63,14 +63,17 @@ route.post("/create/product", async (req, res) => {
 										);
 									})
 									.catch((err) => {
+										console.log("error: ", error);
 										res.status(500).send("Server error");
 									});
 							})
 							.catch((err) => {
+								console.log("error: ", error);
 								res.status(500).send("Server error");
 							});
 					})
 					.catch((err) => {
+						console.log("error: ", error);
 						res.status(500).send("Server error");
 					});
 			}
