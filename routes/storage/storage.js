@@ -32,9 +32,10 @@ route.get("/storage/:page?", async (req, res) => {
         res.status(500).send("Server error");
     });
 
-    const productMaxPages = products.length / productsPerPage;
+    const productMaxPages = Math.ceil(products.length / productsPerPage);
     const productsToShow = products.slice(startIndex, endIndex)
-	// console.log(products);
+
+	// console.log(productMaxPages);
     if (currentPage > productMaxPages || currentPage < 1) {
         res.status(404).send("That page is out of the allowed")
     } else {
