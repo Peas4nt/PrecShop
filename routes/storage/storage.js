@@ -3,12 +3,6 @@ const route = Router();
 const db = require("../../db");
 
 route.get("/storage/:page?", async (req, res) => {
-    const currentPage = req.params.page || 1;
-    const productsPerPage = 2;
-    // array indexes
-    const startIndex = (currentPage - 1) * productsPerPage;
-    const endIndex = startIndex + productsPerPage;
-
 	const products = await db.getData(`
     SELECT 
     storage.id, 
@@ -32,13 +26,19 @@ route.get("/storage/:page?", async (req, res) => {
         res.status(500).send("Server error");
     });
 
+
+    const productsPerPage = 5;
     const productMaxPages = Math.ceil(products.length / productsPerPage);
+    // current page
+    const currentPage = (req.params.page > productMaxPages || req.params.page < 1)? 1 : req.params.page;
+
+    // array indexes
+    const startIndex = (currentPage - 1) * productsPerPage;
+    const endIndex = startIndex + productsPerPage;
     const productsToShow = products.slice(startIndex, endIndex)
 
 	// console.log(productMaxPages);
-    if (currentPage > productMaxPages || currentPage < 1) {
-        res.status(404).send("That page is out of the allowed")
-    } else {
+
         res.render("tables/storage", {
             page: "storage",
             title: "Storage",
@@ -48,7 +48,6 @@ route.get("/storage/:page?", async (req, res) => {
                 productMaxPages
             }
         });
-    }
 
 });
 

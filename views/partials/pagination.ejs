@@ -1,22 +1,27 @@
 <nav class="container">
     <ul class="pagination justify-content-center">
 
-        <% if (pagination.currentPage > 1) { %>
 
-            <li class="page-item">
-                <a class="page-link" href="<%= pagination.currentPage - 1 %>" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-            </li>
-
-            <li class="page-item"><a class="page-link" href="1">...</a></li>
-
-        <% } %>
 
         <% const maxPagesToShow = 4; %>
         <% const startPage = Math.max(pagination.currentPage - maxPagesToShow, 1); %>
         <% const endPage = Math.min(parseInt(pagination.currentPage) + parseInt(maxPagesToShow), pagination.productMaxPages); %>
         
+
+        <% if (pagination.currentPage > 1) { %>
+
+            <li class="page-item">
+                <a class="page-link" href="<%= parseInt(pagination.currentPage) - 1 %>" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+
+            <% if (pagination.currentPage - maxPagesToShow > 1) { %>
+                <li class="page-item"><a class="page-link" href="1">...</a></li>
+            <% } %>
+
+        <% } %>
+
         <% for (let i = startPage; i <= endPage; i++) { %>
           <% if (i == pagination.currentPage) { %>
             <li class="page-item active"><a class="page-link" href="<%= i %>"><%= i %></a></li>
@@ -28,12 +33,15 @@
 
 
         <% if (pagination.productMaxPages > pagination.currentPage) { %>
-
-            <li class="page-item"><a class="page-link"
+            <% if (pagination.currentPage < pagination.productMaxPages - maxPagesToShow) { %>
+                <li class="page-item"><a class="page-link"
                     href="<%= pagination.productMaxPages %>">...</a></li>
+            <% } %>
+
+
 
             <li class="page-item">
-                <a class="page-link" href="<%= pagination.currentPage + 1 %>"
+                <a class="page-link" href="<%= parseInt(pagination.currentPage) + 1 %>"
                     aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                 </a>
