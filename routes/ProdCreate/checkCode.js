@@ -3,7 +3,7 @@ const route = Router();
 const db = require("../../db");
 
 route.get("/check/code", (req, res) => {
-	res.render("dataforms/check_code", {
+	res.render("create product/check_code", {
 		page: "product_create",
 		title: "Create a new product",
 	});

@@ -39,7 +39,7 @@ route.get("/storage/:page?", async (req, res) => {
 
 	// console.log(productMaxPages);
 
-        res.render("tables/storage", {
+        res.render("storage/storage", {
             page: "storage",
             title: "Storage",
             products: productsToShow,

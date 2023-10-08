@@ -21,7 +21,7 @@ route.get("/add/product/:barcode", async (req, res) => {
 			if (result.length === 0) {
 				throw new Error("That code is not available");
 			}
-			res.render("dataforms/product_add", {
+			res.render("create product/product_add", {
 				page: "product_create",
 				title: "Add a product",
 				barcode: code,

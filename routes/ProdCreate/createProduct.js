@@ -6,7 +6,7 @@ route.get("/create/product/:barcode", async (req, res) => {
 	const barcode = req.params.barcode;
 
 	const types = await db.getData("SELECT id,name FROM products_tips");
-	res.render("dataforms/product_create", {
+	res.render("create product/product_create", {
 		page: "product_create",
 		title: "Create a new product",
 		types: types,

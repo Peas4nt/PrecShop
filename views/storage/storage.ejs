@@ -47,10 +47,10 @@
 							</div>
 						</div>
 
-						<div class="col-md-2 d-flex justify-content-center align-items-center">
+						<div class="col d-flex flex-column justify-content-center align-items-center">
 							<h1 class="m-2">$<%=element.cost %>
 							</h1>
-							<a class="btn btn-outline-info btn-lg" href="/product/<%=element.id %>">Buy</a>
+							<a class="btn btn-outline-info btn-lg" href="/storage/product/<%=element.id %>">Buy</a>
 						</div>
 					</div>
 				</div>
@@ -70,7 +70,7 @@
 <script src="https://unpkg.com/jsbarcode@latest/dist/JsBarcode.all.min.js"></script>
 <script>
 	let products = JSON.parse('<%- JSON.stringify(products) %>');
-	console.log(products);
+	// console.log(products);
 
 	products.forEach(element => {
 		JsBarcode(`#barcode${element.id}`, element.barcode);
