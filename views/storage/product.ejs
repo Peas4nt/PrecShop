@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8" />
 	<meta name="author" content="Edijs Kalnins" />
@@ -13,11 +14,48 @@
 		<%=title %>
 	</title>
 </head>
+
 <body>
 	<%- include("../partials/navbar.ejs") %>
 
-    <%= id %>
 
-	<%- include("../partials/footer.ejs") %>
+
+		<div class="container mt-3">
+			<button class="btn  btn-outline-primary">Edit</button>
+			<button class="btn  btn-outline-danger">Delete</button>
+
+			<div class="row row-cols-1 row-cols-lg-2">
+
+				<div class="col">
+					<h1>Product name</h1>
+					<p>Serial number: 123456789</p>
+
+					<hr class="divider">
+					<p>Quantity: 10</p>
+
+					<div class="row row-cols-1 row-cols-lg-2">
+						<div class="col">
+							<form action="">
+								<div class="input-group mb-3">
+									<input class="form-control" type="number" placeholder="Write product quantity">
+									<input class="btn  btn-outline-success" type="submit" value="Buy">
+								</div>
+
+								<input type="hidden" name="prod_id" value="<%= id %>">
+							</form>
+						</div>
+
+						<div class="col">
+							<h3>15.00$</h3>
+						</div>
+					</div>
+				</div>
+
+				<div class="col">Hello col 2</div>
+
+			</div>
+		</div>
+		<%- include("../partials/footer.ejs") %>
 </body>
+
 </html>
