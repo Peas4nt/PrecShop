@@ -54,30 +54,93 @@
 
 
 
-					<form action="/storage/product/" method="post">
+					<form action="/export/product/" method="post">
 						<legend>Export Product</legend>
 						<div class="mb-3">
 							<label for="quantity" class="form-label">Write quantity what you want export:</label>
-							<input type="text" id="quantity" class="form-control" name="quantity"
+							<input type="number" id="quantity" class="form-control" name="quantity"
 								placeholder="Enter quantity">
 						</div>
 
 						<div class="mb-3">
 							<label for="date" class="form-label">Date export:</label>
-							<input type="date" id="date" class="form-control" name="date"
-								placeholder="Enter date">
+							<input type="date" id="date" class="form-control" name="date" placeholder="Enter date">
 						</div>
 
 						<input type="hidden" name="prod_id" value="<%= prod.id %>">
-						
+
 						<input class="btn btn-outline-success" type="submit" value="Export product">
 					</form>
 
 				</div>
 
 				<div class="col">
-					Tables
+					<div class="container mt-3">
+						<h2>Exported Products</h2>
 
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th>Name</th>
+									<th>Exporter</th>
+									<th>Quantity</th>
+									<th>Date</th>
+								</tr>
+							</thead>
+							<tbody>
+								<% exported_products.forEach(element=> { %>
+									<tr>
+										<th>
+											<%=element.name%>
+										</th>
+										<th>
+											<%=element.exporter%>
+										</th>
+										<th>
+											<%=element.quantity%>
+										</th>
+										<th>
+											<%=element.removedate%>
+										</th>
+									</tr>
+									<%}) %>
+							</tbody>
+						</table>
+					</div>
+
+
+					<div class="container mt-3">
+						<h2>Imported Products</h2>
+
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th>Name</th>
+									<th>Importer</th>
+									<th>Quantity</th>
+									<th>Date</th>
+								</tr>
+							</thead>
+							<tbody>
+								<% imported_products.forEach(element=> { %>
+									<tr>
+										<th>
+											<%=element.name%>
+										</th>
+										<th>
+											<%=element.importer%>
+										</th>
+										<th>
+											<%=element.quantity%>
+										</th>
+										<th>
+											<%=element.deliverydate%>
+										</th>
+									</tr>
+									<%}) %>
+							</tbody>
+						</table>
+					</div>
 				</div>
 
 			</div>
