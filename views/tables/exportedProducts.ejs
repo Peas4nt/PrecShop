@@ -24,20 +24,25 @@
       <table class="table table-striped">
         <thead>
           <tr>
-            <th>ID</th>
             <th>Name</th>
-            <th>Product type</th>
-            <th>Barcode</th>
             <th>Exporter</th>
-            <th>Object</th>
             <th>Date</th>
             <th>Quantity</th>
           </tr>
         </thead>
-        <tbody></tbody>
+        <tbody>
+          <% exported_products.forEach(element => { %>
+          <tr>
+            <th><%=element.name%></th>
+            <th><%=element.exporter%></th>
+            <th><%=element.quantity%></th>
+            <th><%=element.removedate%></th>
+          </tr>
+          <%}) %>
+        </tbody>
       </table>
     </div>
-
-    <%- include("../partials/footer.ejs") %>
+    <%- include("../partials/pagination.ejs") %> 
+    <%-include("../partials/footer.ejs") %>
   </body>
 </html>

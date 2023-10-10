@@ -67,14 +67,14 @@
         <!-- Serial Num -->
         <div class="mb-3">
           <label for="serial_num">Serial Number:</label>
-          <input type="text" class="form-control" id="serial_num" placeholder="Enter Serial Number" name="serial_num" />
+          <input type="text" class="form-control" id="serial_num" placeholder="Enter Serial Number" name="serial_num" required/>
         </div>
 
 
         <!-- Import date -->
         <div class="mb-3">
           <label for="import_date">Import Date:</label>
-          <input type="date" class="form-control" id="import_date" placeholder="Enter import date" name="import_date" />
+          <input type="date" class="form-control" id="import_date" placeholder="Enter import date" name="import_date" required />
         </div>
 
 
@@ -84,14 +84,14 @@
           <!-- Quantity -->
           <div class="col">
             <label for="quantity">Quantity:</label>
-            <input type="text" id="quantity" class="form-control" placeholder="Enter Quantity" name="quantity" />
+            <input type="number" id="quantity" class="form-control" placeholder="Enter Quantity" name="quantity" required min="1" max="1000"/>
           </div>
 
 
           <!-- Price -->
           <div class="col">
             <label for="price">Price:</label>
-            <input type="text" id="price" class="form-control" placeholder="Enter Price" name="price" />
+            <input type="number" id="price" class="form-control" placeholder="Enter Price" name="price" required min="0.1"/>
           </div>
 
 
