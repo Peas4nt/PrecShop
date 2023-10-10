@@ -16,7 +16,7 @@ route.get("/storage/:page?", async (req, res) => {
     
     FROM storage 
     LEFT JOIN codes 
-        ON storage.id = codes.id
+        ON storage.code_id = codes.id
     LEFT JOIN products_tips 
         ON products_tips.id = storage.product_tip
     LEFT JOIN users

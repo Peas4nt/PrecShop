@@ -19,46 +19,66 @@
 	<%- include("../partials/navbar.ejs") %>
 
 		<div class="container mt-3">
-			<button class="btn  btn-outline-primary">Edit</button>
-			<button class="btn  btn-outline-danger">Delete</button>
+			<button class="btn btn-outline-primary">Edit</button>
+			<button class="btn btn-outline-danger">Delete</button>
 
 
 			<div class="row row-cols-1 row-cols-lg-2">
 
 				<div class="col">
-					<h1><%= prod.name %></h1>
+					<h1>
+						<%= prod.name %>
+					</h1>
 
 					<hr class="divider">
 
-					<p>Serial number: <%= prod.serial_num %></p>
-					<p>Barcode: <%= prod.barcode %></p>
-					<p>Type: <%= prod.type %></p>
-					<p>Creator: <%= prod.user %></p>
+					<p>Serial number: <%= prod.serial_num %>
+					</p>
+					<p>Barcode: <%= prod.barcode %>
+					</p>
+					<p>Type: <%= prod.type %>
+					</p>
+					<p>Creator: <%= prod.user %>
+					</p>
 
 					<hr class="divider">
-					
-					<p>Quantity: <%= prod.quantity %></p>
-					<h4>Cost: <span class="cost"><%= prod.cost %>$</span></h4>
+
+					<p>Quantity: <%= prod.quantity %>
+					</p>
+					<h4>Cost: <span class="cost">
+							<%= prod.cost %>$
+						</span></h4>
 
 					<hr class="divider">
-					
 
-					<div class="row row-cols-1 row-cols-lg-2">
-						<div class="col">
-							<form action="">
-								<div class="input-group mb-3">
-									<input class="form-control" type="number" placeholder="Write product quantity">
-									<input class="btn  btn-outline-success" type="submit" value="Buy">
-								</div>
 
-								<input type="hidden" name="prod_id" value="<%= prod.id %>">
-							</form>
+
+
+					<form action="/storage/product/" method="post">
+						<legend>Export Product</legend>
+						<div class="mb-3">
+							<label for="quantity" class="form-label">Write quantity what you want export:</label>
+							<input type="text" id="quantity" class="form-control" name="quantity"
+								placeholder="Enter quantity">
 						</div>
 
-					</div>
+						<div class="mb-3">
+							<label for="date" class="form-label">Date export:</label>
+							<input type="date" id="date" class="form-control" name="date"
+								placeholder="Enter date">
+						</div>
+
+						<input type="hidden" name="prod_id" value="<%= prod.id %>">
+						
+						<input class="btn btn-outline-success" type="submit" value="Export product">
+					</form>
+
 				</div>
 
-				<div class="col">Hello col 2</div>
+				<div class="col">
+					Tables
+
+				</div>
 
 			</div>
 		</div>
