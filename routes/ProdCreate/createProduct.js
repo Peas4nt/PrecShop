@@ -53,16 +53,19 @@ route.post("/create/product", async (req, res) => {
 						)
 							.then((result) => {
 								const prodId = result.id;
+								res.redirect(`/storage/product/${prodId}`)
 								db.insertData(
 									"INSERT INTO imported_products (product_id, user_id, quantity, delivery_date) VALUES (?,?,?,?)",
 									[prodId, userId, quantity, imDate],
 								)
+								
 									.then((result) => {
 										console.log(
 											"Product was created successfully",
 										);
+										
 									})
-									.catch((err) => {
+									.catch((error) => {
 										console.log("error: ", error);
 										res.status(500).send("Server error");
 									});
@@ -93,7 +96,6 @@ route.post("/create/product", async (req, res) => {
 	// 	imDate
 	// })
 
-	res.redirect("/");
 });
 
 module.exports = route;
