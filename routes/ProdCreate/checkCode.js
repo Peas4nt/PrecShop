@@ -21,28 +21,8 @@ route.post("/check/code", async (req, res) => {
 		.then((result) => {
 			if (result[0].s === 1) {
 				res.redirect("/add/product/" + code);
-				// console.log("CODE ALREADY USED");
-
-
 			} else {
 				res.redirect("/create/product/" + code);
-
-
-				// db.insertData("INSERT INTO codes(barcode) VALUES (?)", [code])
-				// 	.then((result) => {
-				// 		if (result.result) {
-				// 			console.log(`Code ${code} was created`);
-				// 			res.status(200).redirect("/create/product");
-				// 		} else {
-				// 			console.log(`Code ${code} was not created`);
-				// 			res.status(500).redirect("/check/code");
-				// 		}
-				// 	})
-				// 	.catch((error) => {
-				// 		console.log("Create code: ", error);
-				// 		res.status(500).send("Server error");
-				// 		res.redirect("/check/code");
-				// 	});
 			}
 		})
 		.catch((error) => {
