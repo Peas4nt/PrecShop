@@ -21,7 +21,7 @@ route.get("/storage/:page?", async (req, res) => {
         ON products_tips.id = storage.product_tip
     LEFT JOIN users
         ON storage.user_id = users.id
-    `).catch(err => {
+    `).catch(error => {
         console.log("error: ", error);
         res.status(500).send("Server error");
     });

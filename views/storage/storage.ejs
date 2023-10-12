@@ -19,8 +19,19 @@
 	<%- include("../partials/navbar.ejs") %>
 
 		<div class="container d-flex flex-column justify-content-center">
-
-			<% products.forEach(element=> { %>
+			<form class="d-flex m-0 me-3 pt-4" role="search ">
+				<input
+				  class="form-control me-2"
+				  type="search"
+				  placeholder="Search"
+				  aria-label="Search"
+				  name="search"
+				  id="search"
+				/>
+				<button class="btn btn-outline-success" type="submit">Search</button>
+			  </form>
+		
+			<% products.forEach(element=> { %>	
 
 
 				<div class="card m-3">

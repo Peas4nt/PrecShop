@@ -2,7 +2,7 @@ const { Router } = require("express");
 const route = Router();
 const db = require("../../db");
 
-route.get("/tables/exportedProducts", async (req, res) => {
+route.get("/tables/exportedProducts/:page?", async (req, res) => {
   const products = await db.getData(`
   SELECT
   storage.name AS "name",
