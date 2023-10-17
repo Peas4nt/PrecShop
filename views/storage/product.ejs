@@ -20,7 +20,12 @@
 
 		<div class="container mt-3">
 			<button class="btn btn-outline-primary">Edit</button>
+
+			<form action="/delete/product/" method="post">
+			<input type="hidden" name="id" value=<%=prod.id %>>
 			<button class="btn btn-outline-danger">Delete</button>
+		    </form>
+
 
 
 			<div class="row row-cols-1 row-cols-lg-2">
