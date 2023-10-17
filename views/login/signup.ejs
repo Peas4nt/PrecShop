@@ -20,7 +20,7 @@
       <br /><br /><br /><br /><br /><br /><br />
       <h2 class="d-flex justify-content-center">Sign Up</h2>
       <br />
-      <form action="/signup" method="post">
+      <form action="/signup" method="post" onSubmit = "return checkPassword(this)">
         <div class="mb-3">
           <input
             type="text"
@@ -52,7 +52,7 @@
           <input
             type="password"
             class="form-control"
-            name="password"
+            name="password1"
             placeholder="Password"
             required
           />
@@ -61,7 +61,7 @@
           <input
             type="password"
             class="form-control"
-            name="confirm_password"
+            name="password2"
             placeholder="Confirm Password"
             required
           />
