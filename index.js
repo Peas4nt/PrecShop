@@ -1,5 +1,5 @@
 const express = require("express");
-const ejs = require("ejs");
+const session = require("express-session");
 const path = require("path");
 const fs = require("fs");
 const db = require("./db");
@@ -15,6 +15,15 @@ app.use(express.urlencoded({ extended: true }));
 // set view engine
 app.set("view engine", "ejs");
 app.use(express.static("public"));
+
+app.use(
+	session({
+		secret: "BZIIIIIIIIIIIIIIIIUUUUUUUUUUUUUUUUUUUUUU",
+		resave: false,
+		saveUninitialized: true,
+	}),
+);
+
 
 // this two loops for routes reading
 // f loop read the folders

@@ -3,8 +3,10 @@ const {
 } = require("express");
 const route = Router();
 const db = require("../../db");
+const { checkAuthentication } = require("../../modules/checklogin");
 
-route.get("/add/product/:barcode", async (req, res) => {
+
+route.get("/add/product/:barcode", checkAuthentication, async (req, res) => {
 	const code = req.params.barcode;
 
 	await db
@@ -24,6 +26,7 @@ route.get("/add/product/:barcode", async (req, res) => {
 				throw new Error("That code is not available");
 			}
 			res.render("create product/product_add", {
+				session: req.session.user,
 				page: "product_create",
 				title: "Add a product",
 				barcode: code,
@@ -35,8 +38,8 @@ route.get("/add/product/:barcode", async (req, res) => {
 		});
 });
 
-route.post("/add/product", async (req, res) => {
-	const userId = 1;
+route.post("/add/product", checkAuthentication, async (req, res) => {
+	const userId = req.session.user.id;
 	const product_id = req.body.product_id;
 	const import_date = req.body.import_date;
 	const quantity = req.body.quantity;

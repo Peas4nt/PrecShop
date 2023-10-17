@@ -29,6 +29,7 @@ route.get("/tables/exportedProducts/:page?", async (req, res) => {
   const endIndex = startIndex + productsPerPage;
   const productsToShow = products.slice(startIndex, endIndex);
   res.render("tables/exportedProducts", {
+		session: req.session.user,
     page: "exportedProducts",
     title: "exported Products",
     exported_products: productsToShow,

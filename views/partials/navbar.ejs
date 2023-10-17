@@ -1,9 +1,5 @@
-
-
-
 <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-
         <!-- nav bar logo -->
         <a class="navbar-brand" href="/">VEMEM</a>
 
@@ -11,42 +7,78 @@
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
-                <!-- nav menu -->
-                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link <% if (page === "home") { %> active <% } %>" href="/">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link <% if (page === "product_create") { %> active <% } %>"
-                                href="/check/code">Create Product</a>
-                    </li>
-                  
+            <!-- nav menu -->
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link <% if (page === " home") { %> active <% } %>" href="/">Home</a>
+                </li>
 
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle <% if (page === "storage" || page === "importedProducts" || page === "exportedProducts") { %> active <% } %>" href="/storage/" role="button" data-bs-toggle="dropdown"
+                <li class="nav-item">
+                    <a class="nav-link <% if (page === " product_create") { %> active <% } %>"
+                            href="/check/code">Create Product</a>
+                </li>
+
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle <% if (page === " storage" || page==="importedProducts" ||
+                        page==="exportedProducts" ) { %> active <% } %>" href="/storage/" role="button"
+                            data-bs-toggle="dropdown"
                             aria-expanded="false">
                             Storage
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item <% if (page === "storage") { %> active <% } %>"  href="/storage/">Storage</a></li>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item <% if (page === " storage") { %> active <% } %>"
+                                    href="/storage/">Storage</a></li>
 
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+
+                        <li><a class="dropdown-item <% if (page === " exportedProducts") { %> active <% } %>"
+                                    href="/tables/exportedProducts/">Exported Products</a></li>
+
+                        <li><a class="dropdown-item <% if (page === " importedProducts") { %> active <% } %>"
+                                    href="/tables/importedProducts/">Imported Products</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+            <ul class="navbar-nav ms-auto">
+                <% if (session) { %>
+                    <li class="nav-item dropstart">
+                        <a class="nav-link dropdown-toggle" href="/profile" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">Hi! <%= session.name %></a>
+                        
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="dropdown-item" href="/profile">Profile</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="/setting">Setting</a>
+                            </li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-
-                            <li><a class="dropdown-item <% if (page === "exportedProducts") { %> active <% } %>" href="/tables/exportedProducts/">Exported Products</a></li>
-
-                            <li><a class="dropdown-item <% if (page === "importedProducts") { %> active <% } %>" href="/tables/importedProducts/">Imported Products</a></li>
+                            <li>
+                                <form action="/logout" method="get">
+                                    <input class="dropdown-item" type="submit" value="Logout">
+                                </form>
+                            </li>
                         </ul>
-                </ul>
+                    </li>
 
+                    <% } else { %>
+                        <li class="nav-item">
+                            <a class="btn btn-outline-warning" href="/login">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-outline-warning" href="/signup">Signup</a>
+                        </li>
+                        <% } %>
             </ul>
-
-            <a class=" btn btn-outline-warning" href="/login">Login</a>
-
         </div>
     </div>
 </nav>

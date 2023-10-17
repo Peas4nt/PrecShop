@@ -3,37 +3,43 @@ const route = Router();
 const db = require("../../db");
 
 route.get("/signup", (req, res) => {
-  res.render("login/signup", {
-    page: "signup",
-    title: "signup",
-  });
+	res.render("login/signup", {
+		session: req.session.user,
+		page: "signup",
+		title: "signup",
+	});
 });
 
 route.post("/signup", async (req, res) => {
-  const name = req.body.name;
-  const lastname = req.body.lastname;
-  const email = req.body.email;
-  const password = req.body.password;
+	const name = req.body.name;
+	const lastname = req.body.lastname;
+	const email = req.body.email;
+	const password = req.body.password;
 
-  await db
-    .insertData(
-      "INSERT INTO users(name,lastname,email,password) VALUES (?, ?, ?, ?)",
-      [name, lastname, email, password]
-    )
-    .then((result) => {
-      if (result.result) {
-        console.log(result.id);
-        console.log(`User ${name} was created`);
-        res.status(200).redirect("/");
-      } else {
-        console.log(`User ${name} was not created`);
-        res.status(500).redirect("/signup");
-      }
-    })
-    .catch((error) => {
-      console.log("Create user: ", error);
-      res.status(500).send("Server error");
-    });
+
+	await db
+		.insertData(
+			"INSERT INTO users(name,lastname,email,password) VALUES (?, ?, ?, ?)",
+			[name, lastname, email, password]
+		)
+		.then((result) => {
+			console.log(result);
+			if (result.result) {
+				
+				console.log(`User ${name} was created`);
+				req.session.user = {
+					id: result.id, name, lastname, email
+				}
+				res.status(200).json(1);
+			} else {
+				console.log(`User ${name} was not created`);
+				res.status(500).json("User was not created. Please try again.");
+			}
+		})
+		.catch((error) => {
+			console.log("Create user: ", error);
+			res.status(500).json("Server error");
+		});
 });
 
 module.exports = route;

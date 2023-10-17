@@ -1,15 +1,17 @@
 const { Router } = require("express");
 const route = Router();
 const db = require("../../db");
+const { checkAuthentication } = require("../../modules/checklogin");
 
-route.get("/check/code", (req, res) => {
+route.get("/check/code", checkAuthentication, (req, res) => {
 	res.render("create product/check_code", {
+		session: req.session.user,
 		page: "product_create",
 		title: "Create a new product",
 	});
 });
 
-route.post("/check/code", async (req, res) => {
+route.post("/check/code", checkAuthentication, async (req, res) => {
 	const code = req.body.prod_code;
 
 	await db

@@ -3,10 +3,9 @@ const route = Router();
 const db = require("../../db");
 
 route.get("/storage/", async (req, res) => {
-    const search = req.query.query || '';
-    const currentPage = parseInt(req.query.page, 10) || 1;
+	const search = req.query.query || "";
+	const currentPage = parseInt(req.query.page, 10) || 1;
 
-	console.log(search);
 	let products;
 	const sql = `
   SELECT 
@@ -28,7 +27,6 @@ route.get("/storage/", async (req, res) => {
       ON storage.user_id = users.id
   `;
 	if (search != "") {
-		console.log("Ne Pusto");
 		products = await db
 			.getData(sql + `WHERE storage.name LIKE '%${search}%'`)
 			.catch((error) => {
@@ -40,7 +38,6 @@ route.get("/storage/", async (req, res) => {
 			console.log("error: ", error);
 			res.status(500).send("Server error");
 		});
-		console.log("Pusto");
 	}
 
 	const productsPerPage = 5;
@@ -54,13 +51,14 @@ route.get("/storage/", async (req, res) => {
 	// console.log(productMaxPages);
 
 	res.render("storage/storage", {
+		session: req.session.user,
 		page: "storage",
 		title: "Storage",
 		products: productsToShow,
 		pagination: {
 			currentPage,
 			productMaxPages,
-            search
+			search,
 		},
 	});
 });

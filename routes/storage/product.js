@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const route = Router();
 const db = require("../../db");
+const { checkAuthentication } = require("../../modules/checklogin");
 
 route.get("/storage/product/:id?", async (req, res) => {
 	const prodId = req.params.id ?? 1;
@@ -55,6 +56,7 @@ route.get("/storage/product/:id?", async (req, res) => {
   ORDER BY delivery_date DESC`);
 
 	res.render("storage/product", {
+		session: req.session.user,
 		page: "product",
 		title: "Product",
 		prod: product[0],
@@ -63,11 +65,11 @@ route.get("/storage/product/:id?", async (req, res) => {
 	});
 });
 
-route.post("/export/product/", async (req, res) => {
+route.post("/export/product/", checkAuthentication, async (req, res) => {
 	const quantity = req.body.quantity;
 	const date = req.body.date;
 	const prodId = req.body.prod_id;
-	const userId = 1;
+	const userId = req.session.user.id;
 
 	db.getData(
 		`
@@ -76,7 +78,7 @@ route.post("/export/product/", async (req, res) => {
 	WHERE id = ${prodId}
 
     `,
-	).catch((err) => {
+	).catch((error) => {
 		console.log("error: ", error);
 		res.status(500).send("Server error");
 	});
@@ -86,7 +88,7 @@ route.post("/export/product/", async (req, res) => {
     (quantity,product_id,user_id,remove_date) 
     VALUES (?,?,?,?)`,
 		[quantity, prodId, userId, date],
-	).catch((err) => {
+	).catch((error) => {
 		console.log("error: ", error);
 		res.status(500).send("Server error");
 	});

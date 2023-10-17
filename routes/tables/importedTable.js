@@ -28,6 +28,7 @@ route.get("/tables/importedProducts/:page?", async (req, res) => {
   const productsToShow = products.slice(startIndex, endIndex)
 
   res.render("tables/importedProducts", {
+		session: req.session.user,
     page: "importedProducts",
     title: "imported Products",
     imported_products: productsToShow,
