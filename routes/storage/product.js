@@ -3,9 +3,9 @@ const route = Router();
 const db = require("../../db");
 
 route.get("/storage/product/:id?", async (req, res) => {
-	const prodId = req.params.id ?? 1;
+  const prodId = req.params.id ?? 1;
 
-	const product = await db.getData(`
+  const product = await db.getData(`
     SELECT 
     storage.id, 
     storage.name AS 'name', 
@@ -26,7 +26,7 @@ route.get("/storage/product/:id?", async (req, res) => {
    	WHERE storage.id=${prodId}
     `);
 
-	const exported_products = await db.getData(`
+  const exported_products = await db.getData(`
     SELECT
     storage.name AS "name",
     users.name AS "exporter",
@@ -40,7 +40,7 @@ route.get("/storage/product/:id?", async (req, res) => {
     WHERE storage.id = ${prodId}
     ORDER BY remove_date DESC`);
 
-	const imported_products = await db.getData(`
+  const imported_products = await db.getData(`
   SELECT 
   storage.name AS "name",
   users.name AS "importer",
@@ -54,47 +54,56 @@ route.get("/storage/product/:id?", async (req, res) => {
   WHERE storage.id = ${prodId}
   ORDER BY delivery_date DESC`);
 
-	res.render("storage/product", {
-		page: "product",
-		title: "Product",
-		prod: product[0],
-		exported_products,
-		imported_products,
-	});
+  res.render("storage/product", {
+    page: "product",
+    title: "Product",
+    prod: product[0],
+    exported_products,
+    imported_products,
+  });
 });
 
 route.post("/export/product/", async (req, res) => {
-	const quantity = req.body.quantity;
-	const date = req.body.date;
-	const prodId = req.body.prod_id;
-	const userId = 1;
+  const quantity = req.body.quantity;
+  const date = req.body.date;
+  const prodId = req.body.prod_id;
+  const userId = 1;
 
-	db.getData(
-		`
+  db.getData(
+    `
     UPDATE storage 
 	SET quantity = quantity - ${quantity}
 	WHERE id = ${prodId}
 
-    `,
-	).catch((err) => {
-		console.log("error: ", error);
-		res.status(500).send("Server error");
-	});
+    `
+  ).catch((err) => {
+    console.log("error: ", error);
+    res.status(500).send("Server error");
+  });
 
-	db.insertData(
-		`INSERT INTO exported_products 
+  db.insertData(
+    `INSERT INTO exported_products 
     (quantity,product_id,user_id,remove_date) 
     VALUES (?,?,?,?)`,
-		[quantity, prodId, userId, date],
-	).catch((err) => {
-		console.log("error: ", error);
-		res.status(500).send("Server error");
-	});
+    [quantity, prodId, userId, date]
+  ).catch((err) => {
+    console.log("error: ", error);
+    res.status(500).send("Server error");
+  });
 
-	res.redirect(`/storage/product/${prodId}`);
+  res.redirect(`/storage/product/${prodId}`);
 });
 
 route.put("/edit/product", (req, res) => {});
-route.delete("/delete/product", (req, res) => {});
+route.post("/delete/product", (req, res) => {
+  const prodId = req.body.id;
+  console.log("prodId: ", prodId);
+  db.getData(`DELETE FROM storage WHERE id = ${prodId}`).catch((err) => {
+    console.log("error: ", error);
+    res.status(500).send("Server error");
+  });
+  res.redirect("/");
+  console.log("Deleted");
+});
 
 module.exports = route;
