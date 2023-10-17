@@ -17,10 +17,9 @@
   <body class="" style="height: 100vh">
     <%- include("../partials/navbar.ejs") %>
     <div class="container mt-5 w-25">
-      <br /><br /><br /><br /><br /><br /><br />
       <h2 class="d-flex justify-content-center">Login</h2>
       <br />
-      <form action="-----------------------------" method="post">
+      <form class="login" action="/login" method="post">
         <div class="mb-3">
           <input
             type="email"
@@ -49,4 +48,26 @@
       </form>
     </div>
   </body>
+  <script>
+    const login = document.querySelector(".login");
+    login.addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      const email = event.currentTarget.elements[0].value;
+      const password = event.currentTarget.elements[1].value;
+      fetch("/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: `email=${email}&password=${password}`,
+      })
+        .then((result) => result.json())
+        .then((result) => {
+          if (result == 1) {
+            document.location.href = "/";
+          } else {
+            alert(result);
+          }
+        });
+    });
+  </script>
 </html>
