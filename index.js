@@ -20,7 +20,7 @@ app.use(
 	session({
 		secret: "BZIIIIIIIIIIIIIIIIUUUUUUUUUUUUUUUUUUUUUU",
 		resave: false,
-		saveUninitialized: true,
+		saveUninitialized: false,
 	}),
 );
 

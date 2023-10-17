@@ -21,10 +21,10 @@
 		<div class="container mt-3">
 			<button class="btn btn-outline-primary">Edit</button>
 
-			<form action="/delete/product/" method="post">
-			<input type="hidden" name="id" value=<%=prod.id %>>
-			<button class="btn btn-outline-danger">Delete</button>
-		    </form>
+			<form class="delete-prod-form">
+				<input type="hidden" name="id" value=<%=prod.id %>>
+				<button class="btn btn-outline-danger">Delete</button>
+			</form>
 
 
 
@@ -153,5 +153,5 @@
 
 		<%- include("../partials/footer.ejs") %>
 </body>
-
+<script src="/scripts/prodDelete.js"></script>
 </html>
