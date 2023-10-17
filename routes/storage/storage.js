@@ -2,95 +2,67 @@ const { Router } = require("express");
 const route = Router();
 const db = require("../../db");
 
-route.get("/storage/page/:page?", async (req, res) => {
-  const search = req.body.search;
+route.get("/storage/", async (req, res) => {
+    const search = req.query.query || '';
+    const currentPage = parseInt(req.query.page, 10) || 1;
 
-  console.log(search);
-  let  products = [];
-  if (search) {
-    console.log("Ne Pusto");
-    products = await db
-      .getData(
-        `
-    SELECT 
-    storage.id, 
-    storage.name AS 'name', 
-    storage.cost, 
-    storage.quantity, 
-    storage.serial_num, 
-    codes.barcode, 
-    products_tips.name AS 'type',
-    users.name AS 'user'
-    
-    FROM storage 
-    LEFT JOIN codes 
-        ON storage.code_id = codes.id
-    LEFT JOIN products_tips 
-        ON products_tips.id = storage.product_tip
-    LEFT JOIN users
-        ON storage.user_id = users.id
-    WHERE name LIKE '%${search}%'
-    `
-      )
-      .catch((error) => {
-        console.log("error: ", error);
-        res.status(500).send("Server error");
-      });
-  } else {
-    products = await db
-      .getData(
-        `
-    SELECT 
-    storage.id, 
-    storage.name AS 'name', 
-    storage.cost, 
-    storage.quantity, 
-    storage.serial_num, 
-    codes.barcode, 
-    products_tips.name AS 'type',
-    users.name AS 'user'
-    
-    FROM storage 
-    LEFT JOIN codes 
-        ON storage.code_id = codes.id
-    LEFT JOIN products_tips 
-        ON products_tips.id = storage.product_tip
-    LEFT JOIN users
-        ON storage.user_id = users.id
+	console.log(search);
+	let products;
+	const sql = `
+  SELECT 
+  storage.id, 
+  storage.name AS 'name', 
+  storage.cost, 
+  storage.quantity, 
+  storage.serial_num, 
+  codes.barcode, 
+  products_tips.name AS 'type',
+  users.name AS 'user'
+  
+  FROM storage 
+  LEFT JOIN codes 
+      ON storage.code_id = codes.id
+  LEFT JOIN products_tips 
+      ON products_tips.id = storage.product_tip
+  LEFT JOIN users
+      ON storage.user_id = users.id
+  `;
+	if (search != "") {
+		console.log("Ne Pusto");
+		products = await db
+			.getData(sql + `WHERE storage.name LIKE '%${search}%'`)
+			.catch((error) => {
+				console.log("error: ", error);
+				res.status(500).send("Server error");
+			});
+	} else {
+		products = await db.getData(sql).catch((error) => {
+			console.log("error: ", error);
+			res.status(500).send("Server error");
+		});
+		console.log("Pusto");
+	}
 
-    `
-      )
-      .catch((error) => {
-        console.log("error: ", error);
-        res.status(500).send("Server error");
-      });
-    console.log("Pusto");
-  }
+	const productsPerPage = 5;
+	const productMaxPages = Math.ceil(products.length / productsPerPage);
 
-  const productsPerPage = 5;
-  const productMaxPages = Math.ceil(products.length / productsPerPage);
-  // current page
-  const currentPage =
-    !req.params.page || req.params.page > productMaxPages || req.params.page < 1
-      ? 1
-      : req.params.page;
+	// array indexes
+	const startIndex = (currentPage - 1) * productsPerPage;
+	const endIndex = startIndex + productsPerPage;
+	const productsToShow = products.slice(startIndex, endIndex);
 
-  // array indexes
-  const startIndex = (currentPage - 1) * productsPerPage;
-  const endIndex = startIndex + productsPerPage;
-  const productsToShow = products.slice(startIndex, endIndex);
+	// console.log(productMaxPages);
 
-  // console.log(productMaxPages);
-
-  res.render("storage/storage", {
-    page: "storage",
-    title: "Storage",
-    products: productsToShow,
-    pagination: {
-      currentPage,
-      productMaxPages,
-    },
-  });
+	res.render("storage/storage", {
+		page: "storage",
+		title: "Storage",
+		products: productsToShow,
+		pagination: {
+			currentPage,
+			productMaxPages,
+            search
+		},
+	});
 });
 
 module.exports = route;
