@@ -9,17 +9,15 @@
         
 
         <% if (pagination.currentPage > 1) { %>
-
+            <% if (pagination.currentPage - maxPagesToShow > 1) { %>
+                <li class="page-item"><a class="page-link" href="?query=<%= pagination.search %>&page=1">...</a></li>
+            <% } %>
+            
             <li class="page-item">
                 <a class="page-link" href="?query=<%= pagination.search %>&page=<%= parseInt(pagination.currentPage) - 1 %>" aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
                 </a>
             </li>
-
-            <% if (pagination.currentPage - maxPagesToShow > 1) { %>
-                <li class="page-item"><a class="page-link" href="?query=<%= pagination.search %>&page=1">...</a></li>
-            <% } %>
-
         <% } %>
 
         <% for (let i = startPage; i <= endPage; i++) { %>
@@ -33,13 +31,6 @@
 
 
         <% if (pagination.productMaxPages > pagination.currentPage) { %>
-            <% if (pagination.currentPage < pagination.productMaxPages - maxPagesToShow) { %>
-                <li class="page-item"><a class="page-link"
-                    href="?query=<%= pagination.search %>&page=<%= pagination.productMaxPages %>">...</a></li>
-            <% } %>
-
-
-
             <li class="page-item">
                 <a class="page-link" href="?query=<%= pagination.search %>&page=<%= parseInt(pagination.currentPage) + 1 %>"
                     aria-label="Next">
@@ -47,6 +38,10 @@
                 </a>
             </li>
 
+            <% if (pagination.currentPage < pagination.productMaxPages - maxPagesToShow) { %>
+                <li class="page-item"><a class="page-link"
+                    href="?query=<%= pagination.search %>&page=<%= pagination.productMaxPages %>">...</a></li>
+            <% } %>
         <% } %>
 
 
