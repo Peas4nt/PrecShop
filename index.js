@@ -18,7 +18,7 @@ app.use(express.static("public"));
 
 app.use(
 	session({
-		secret: "BZIIIIIIIIIIIIIIIIUUUUUUUUUUUUUUUUUUUUUU",
+		secret: "qwerty",
 		resave: false,
 		saveUninitialized: false,
 	}),
@@ -40,7 +40,7 @@ fs.readdirSync(routesDirectory).forEach((folder) => {
 
 const start = () => {
 	// connect to database
-	db.сonnectToDB();
+	db.connectToDB();
 	// server starting
 	app.listen(PORT, () => {
 		console.log(`Server is running on port ${PORT} \nhttp://localhost:${PORT}`);
