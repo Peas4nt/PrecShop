@@ -16,29 +16,48 @@ route.post("/signup", async (req, res) => {
 	const email = req.body.email;
 	const password = req.body.password;
 
-
 	await db
-		.insertData(
-			"INSERT INTO users(name,lastname,email,password) VALUES (?, ?, ?, ?)",
-			[name, lastname, email, password]
+		.getData(
+			"SELECT EXISTS(SELECT email FROM users WHERE email = '" +
+				email +
+				"' ) as s",
 		)
 		.then((result) => {
-			console.log(result);
-			if (result.result) {
-				
-				console.log(`User ${name} was created`);
-				req.session.user = {
-					id: result.id, name, lastname, email
-				}
-				res.status(200).json(1);
+			if (result[0].s === 1) {
+				return res.status(400).json("User already exists");
 			} else {
-				console.log(`User ${name} was not created`);
-				res.status(500).json("User was not created. Please try again.");
+				db.insertData(
+					"INSERT INTO users(name,lastname,email,password) VALUES (?, ?, ?, ?)",
+					[name, lastname, email, password],
+				)
+					.then((result) => {
+						console.log(result);
+						if (result.result) {
+							console.log(`User ${name} was created`);
+							req.session.user = {
+								id: result.id,
+								name,
+								lastname,
+								email,
+							};
+							res.status(200).json(1);
+						} else {
+							console.log(`User ${name} was not created`);
+							res.status(500).json(
+								"User was not created. Please try again.",
+							);
+						}
+					})
+					.catch((error) => {
+						console.log("Create user: ", error);
+						res.status(500).json("Server error");
+					});
 			}
 		})
-		.catch((error) => {
-			console.log("Create user: ", error);
-			res.status(500).json("Server error");
+		.catch((err) => {
+			return res
+				.status(500)
+				.json("User was not created. Please try again.");
 		});
 });
 

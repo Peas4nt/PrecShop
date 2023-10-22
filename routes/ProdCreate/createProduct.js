@@ -41,24 +41,23 @@ route.post("/create/product", checkAuthentication, async (req, res) => {
 				db.insertData("INSERT INTO codes(barcode) VALUES (?)", [code])
 					.then((result) => {
 						const codeId = result.id;
-						const insert = db
-							.insertData(
-								"INSERT INTO storage (code_id, product_tip, user_id, name, cost, quantity, serial_num) VALUES (?,?,?,?,?,?,?)",
-								[
-									codeId,
-									typeId,
-									userId,
-									name,
-									price,
-									quantity,
-									serNum,
-								],
-							)
-
+						db.insertData(
+							"INSERT INTO storage (code_id, product_tip, user_id, name, cost, quantity, serial_num) VALUES (?,?,?,?,?,?,?)",
+							[
+								codeId,
+								typeId,
+								userId,
+								name,
+								price,
+								quantity,
+								serNum,
+							],
+						)
 							.then((result) => {
-								console.log(insert);
 								const prodId = result.id;
-
+								res.redirect(
+									`/storage/product/${prodId}`,
+								);
 								db.insertData(
 									"INSERT INTO imported_products (product_id, user_id, quantity, delivery_date) VALUES (?,?,?,?)",
 									[prodId, userId, quantity, imDate],
@@ -68,21 +67,18 @@ route.post("/create/product", checkAuthentication, async (req, res) => {
 										console.log(
 											"Product was created successfully",
 										);
-										res.redirect(
-											`/storage/product/${prodId}`,
-										);
 									})
 									.catch((error) => {
 										console.log("error: ", error);
 										res.status(500).send("Server error");
 									});
 							})
-							.catch((err) => {
+							.catch((error) => {
 								console.log("error: ", error);
 								res.status(500).send("Server error");
 							});
 					})
-					.catch((err) => {
+					.catch((error) => {
 						console.log("error: ", error);
 						res.status(500).send("Server error");
 					});
@@ -92,16 +88,6 @@ route.post("/create/product", checkAuthentication, async (req, res) => {
 			console.log("error: ", error);
 			res.status(500).send("Server error");
 		});
-
-	// console.log({
-	// 	code,
-	// 	name,
-	// 	typeId,
-	// 	serNum,
-	// 	quantity,
-	// 	price,
-	// 	imDate
-	// })
 });
 
 module.exports = route;

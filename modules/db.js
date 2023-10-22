@@ -14,7 +14,7 @@ class DBmysql {
 		this.#password = password;
 	}
 
-	сonnectToDB() {
+	connectToDB() {
 		this.#conn = mysql.createPool({
 			connectionLimit: 5,
 			host: this.#host,
