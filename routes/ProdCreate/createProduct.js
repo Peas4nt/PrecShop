@@ -55,7 +55,9 @@ route.post("/create/product", checkAuthentication, async (req, res) => {
 						)
 							.then((result) => {
 								const prodId = result.id;
-
+								res.redirect(
+									`/storage/product/${prodId}`,
+								);
 								db.insertData(
 									"INSERT INTO imported_products (product_id, user_id, quantity, delivery_date) VALUES (?,?,?,?)",
 									[prodId, userId, quantity, imDate],
@@ -64,9 +66,6 @@ route.post("/create/product", checkAuthentication, async (req, res) => {
 									.then((result) => {
 										console.log(
 											"Product was created successfully",
-										);
-										res.redirect(
-											`/storage/product/${prodId}`,
 										);
 									})
 									.catch((error) => {
