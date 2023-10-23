@@ -3,13 +3,13 @@ const route = Router();
 const db = require("../../db");
 const { checkAuthentication } = require("../../modules/checklogin");
 
-route.get("/profile", checkAuthentication, async (req, res) => {
-  const userid = req.session.user.id;
+route.get("/profile/:id?", checkAuthentication, async (req, res) => {
+  const userid = req.params.id ?? req.session.user.id;
   const user = await db.getData(
-	`SELECT name,lastname,email FROM users WHERE id = ${userid}`
-  )
+    `SELECT name,lastname,email FROM users WHERE id = ${userid}`
+  );
   const imported_products = await db.getData(
-	`
+    `
 	SELECT 
   storage.name AS "name",
   imported_products.quantity as quantity,
@@ -22,9 +22,9 @@ route.get("/profile", checkAuthentication, async (req, res) => {
   WHERE users.id = ${userid}
   ORDER BY delivery_date DESC
   `
-  )
+  );
   const exported_products = await db.getData(
-	`
+    `
 	SELECT 
   storage.name AS "name",
   exported_products.quantity as quantity,
@@ -37,18 +37,15 @@ route.get("/profile", checkAuthentication, async (req, res) => {
   WHERE users.id = ${userid}
   ORDER BY remove_date DESC
   `
-  )
-  console.log(user);
-  console.log(imported_products);
-  console.log(exported_products);
+  );
 
   res.render("profile/profile", {
     session: req.session.user,
     page: "profile",
     title: "Profile",
-	user: user[0],
-	exported_products,
-	imported_products,
+    user: user[0],
+    exported_products,
+    imported_products,
   });
 });
 
