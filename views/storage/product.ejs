@@ -19,11 +19,14 @@
 	<%- include("../partials/navbar.ejs") %>
 
 		<div class="container mt-3">
-			<button class="btn btn-outline-primary">Edit</button>
+			<form class="edit-prod-form">
+				<input type="hidden" name="id" value=<%=prod.id %>>
+				<input name="btn" class="btn btn-outline-primary" type="submit" value="Edit">
+			</form>
 
 			<form class="delete-prod-form">
 				<input type="hidden" name="id" value=<%=prod.id %>>
-				<button class="btn btn-outline-danger">Delete</button>
+				<input type="submit" class="btn btn-outline-danger" value="Delete">
 			</form>
 
 
@@ -31,40 +34,94 @@
 			<div class="row row-cols-1 row-cols-lg-2">
 
 				<div class="col">
-					<h1>
-						<%= prod.name %>
-					</h1>
+					<div class="data">
+						<h1>
+							<span class="prod-name">
+								<%= prod.name %>
+							</span>
+						</h1>
 
-					<hr class="divider">
+						<hr class="divider">
 
-					<p>Serial number: <%= prod.serial_num %>
-					</p>
-					<p>Barcode: <%= prod.barcode %>
-					</p>
-					<p>Type: <%= prod.type %>
-					</p>
-					<p>Creator: <%= prod.user %>
-					</p>
+						<p>Serial number: <%= prod.serial_num %>
+						</p>
+						<p>Barcode: <span class="prod-serial-number">
+								<%= prod.barcode %>
+							</span>
+						</p>
+						<p>Type: <span class="prod-type">
+								<%= prod.type %>
+							</span>
+						</p>
+						<p>Creator: <%= prod.user %>
+						</p>
 
-					<hr class="divider">
+						<hr class="divider">
 
-					<p>Quantity: <%= prod.quantity %>
-					</p>
-					<h4>Cost: <span class="cost">
-							<%= prod.cost %>$
-						</span></h4>
+						<p>Quantity: <span class="prod-quantity">
+								<%= prod.quantity %>
+							</span>
+						</p>
+						<h4>Cost: <span class="prod-cost">
+								<%= prod.cost %>$
+							</span></h4>
 
-					<hr class="divider">
+						<hr class="divider">
+					</div>
 
+					
+					<form style="display: none;">
+						<h1>
+							<input type="text" class="form-control prod-name-input" placeholder="Product Name"
+								value="<%= prod.name %>">
+						</h1>
 
+						<hr class="divider mt-3 mb-3">
+
+						<div class="mb-3">
+							<label class="form-label">Serial number:</label>
+							<input type="text" class="form-control prod-serial-num-input" value="<%= prod.serial_num %>">
+						</div>
+
+						<div class="mb-3">
+							<label class="form-label">Barcode:</label>
+							<input type="text" class="form-control prod-barcode-input" value="<%= prod.barcode %>">
+						</div>
+
+						<div class="mb-3">
+							<label class="form-label">Type:</label>
+							<input type="text" class="form-control prod-type-input" value="<%= prod.type %>">
+						</div>
+
+						<div class="mb-3">
+							<label class="form-label">Creator:</label>
+							<input type="text" class="form-control prod-user-input" value="<%= prod.user %>">
+						</div>
+
+						<hr class="divider mt-3 mb-3">
+
+						<div class="mb-3">
+							<label class="form-label">Quantity:</label>
+							<input type="number" class="form-control prod-quantity-input" value="<%= prod.quantity %>">
+						</div>
+
+						<div class="mb-3">
+							<label class="form-label">Cost:</label>
+							<div class="input-group">
+								<input type="number" class="form-control prod-cost-input" value="<%= prod.cost %>">
+								<span class="input-group-text">$</span>
+							</div>
+						</div>
+
+						<hr class="divider mt-3 mb-3">
+					</form>
 
 
 					<form action="/export/product/" method="post">
 						<legend>Export Product</legend>
 						<div class="mb-3">
 							<label for="quantity" class="form-label">Write quantity what you want export:</label>
-							<input type="number" id="quantity" class="form-control" name="quantity"
-								placeholder="Enter quantity">
+							<input type="number" id="quantity" class="form-control" name="quantity" placeholder="Enter quantity">
 						</div>
 
 						<div class="mb-3">
@@ -154,4 +211,6 @@
 		<%- include("../partials/footer.ejs") %>
 </body>
 <script src="/scripts/prodDelete.js"></script>
+<script src="/scripts/prodEdit.js"></script>
+
 </html>

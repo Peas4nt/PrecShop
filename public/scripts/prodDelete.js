@@ -1,6 +1,6 @@
-const form = document.querySelector(".delete-prod-form");
+const deleteForm = document.querySelector(".delete-prod-form");
 
-form.addEventListener("submit", (e) => {
+deleteForm.addEventListener("submit", (e) => {
 	e.preventDefault();
 	const form = e.currentTarget;
 	if (confirm("You want to delete this?")) {
@@ -20,7 +20,7 @@ function deleteQuery(body){
 		.then((result) => result.json())
 		.then((result) => {
 			if (result == 1) {
-                alert("Product was deleted successfully")
+        alert("Product was deleted successfully")
 				document.location.href = "/storage/";
 			} else {
 				alert(result);
