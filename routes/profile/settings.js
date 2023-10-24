@@ -15,23 +15,37 @@ route.get("/settings/", checkAuthentication, async (req, res) => {
   });
 });
 
-// route.post("/settings/", checkAuthentication, async (req, res) => {
-//   const userid = req.session.user.id;
-//   const name = req.body.name;
-//   const lastname = req.body.lastname;
-//   const email = req.body.email;
-//   const password = req.body.password;
-//   console.log(name,lastname,email,password)
-//   await db.insertData(
-//     `UPDATE users
-// 		SET
-// 		name = ${name},
-// 		lastname = ${lastname},
-// 		email = ${email},
-// 		password = ${password}
-// 		WHERE id = ${userid}
-// 		`
-//   );
-// });
+route.post("/settings/", checkAuthentication, async (req, res) => {
+  const userid = req.session.user.id;
+  const name = req.body.name;
+  const lastname = req.body.lastname;
+  const email = req.body.email;
+  const password = req.body.password;
+  console.log(name, lastname, email, password, userid);
+  // await db.insertData(
+  //   `UPDATE users
+  // 	SET
+  // 	name = ${name},
+  // 	lastname = ${lastname},
+  // 	email = ${email},
+  // 	password = ${password}
+  // 	WHERE id = ${userid}
+  // 	`
+  // );
+  await db.insertData(
+    "UPDATE users SET name = '" +
+      name +
+      "', lastname = '" +
+      lastname +
+      "', email = '" +
+      email +
+      "', password = '" +
+      password +
+      "'  where id = '" +
+      userid +
+      "'"
+  );
+  res.redirect("profile/");
+});
 
 module.exports = route;
