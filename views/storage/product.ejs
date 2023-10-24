@@ -69,12 +69,16 @@
 						<hr class="divider">
 					</div>
 
-					
-					<form style="display: none;">
-						<h1>
+
+					<form class="edit-form" style="display: none;">
+						<input type="submit" name="submit" class="btn btn-outline-primary" value="Submit">
+						<input type="button" name="cancel" class="btn btn-outline-danger" value="Cancel">
+
+						<div class="mb-3">
+							<label class="form-label">Name:</label>
 							<input type="text" class="form-control prod-name-input" placeholder="Product Name"
 								value="<%= prod.name %>">
-						</h1>
+						</div>
 
 						<hr class="divider mt-3 mb-3">
 
@@ -90,12 +94,24 @@
 
 						<div class="mb-3">
 							<label class="form-label">Type:</label>
-							<input type="text" class="form-control prod-type-input" value="<%= prod.type %>">
+							<select class="form-select" id="prod_type" name="prod_type">
+								<option value="" disabled selected>
+									<%= prod.type %>
+								</option>
+
+								<% types.forEach(element=>
+									{ %>
+									<option value=<%=element.id%>><%=element.name%>
+									</option>
+
+									<%}) %>
+
+							</select>
 						</div>
 
 						<div class="mb-3">
 							<label class="form-label">Creator:</label>
-							<input type="text" class="form-control prod-user-input" value="<%= prod.user %>">
+							<input disabled type="text" class="form-control prod-user-input" value="<%= prod.user %>">
 						</div>
 
 						<hr class="divider mt-3 mb-3">
@@ -210,7 +226,6 @@
 
 		<%- include("../partials/footer.ejs") %>
 </body>
-<script src="/scripts/prodDelete.js"></script>
-<script src="/scripts/prodEdit.js"></script>
+<script src="/scripts/prodDeleteEdit.js"></script>
 
 </html>

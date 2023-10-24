@@ -55,10 +55,13 @@ route.get("/storage/product/:id?", async (req, res) => {
   WHERE storage.id = ${prodId}
   ORDER BY delivery_date DESC`);
 
+	const types = await db.getData("SELECT id,name FROM products_tips");
+
 	res.render("storage/product", {
 		session: req.session.user,
 		page: "product",
 		title: "Product",
+		types,
 		prod: product[0],
 		exported_products,
 		imported_products,
@@ -96,18 +99,23 @@ route.post("/export/product/", checkAuthentication, async (req, res) => {
 	res.redirect(`/storage/product/${prodId}`);
 });
 
-route.put("/edit/product", checkAuthentication, (req, res) => {});
+route.put("/storage/product", checkAuthentication, async (req, res) => {
+	const { name, serial_num, barcode, type, quantity, cost } = req.body;
+    
+});
 
-route.delete("/delete/product", checkAuthentication, (req, res) => {
+route.delete("/storage/product", checkAuthentication, async (req, res) => {
 	const prodId = req.body.id;
-	db.getData(`DELETE FROM storage WHERE id = ${prodId}`).then(()=> {
-		res.status(200).json("1");
-		console.log("Deleted");
-	}).catch((err) => {
-		console.log("error: ", err);
-		res.status(500).json("Server error");
-	});
-
+	await db
+		.getData(`DELETE FROM storage WHERE id = ${prodId}`)
+		.then(() => {
+			res.status(200).json("1");
+			console.log("Deleted");
+		})
+		.catch((err) => {
+			console.log("error: ", err);
+			res.status(500).json("Server error");
+		});
 });
 
 module.exports = route;
