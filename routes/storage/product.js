@@ -106,8 +106,6 @@ route.delete("/delete/product", checkAuthentication, async (req, res) => {
   barcode_id = await db.getData(
     `SELECT code_id FROM storage WHERE id = ${prodId}`
   );
-  
-  console.log(barcode_id[0]);
   await db
     .getData(`DELETE FROM storage WHERE id = ${prodId}`)
     .then(() => {
