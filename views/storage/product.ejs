@@ -68,6 +68,11 @@
 						</div>
 
 						<div class="mb-3">
+							<label for="object" class="form-label">Where exported to(Object name):</label>
+							<input type="text" id="object" class="form-control" name="object" placeholder="Enter object name">
+						</div>
+
+						<div class="mb-3">
 							<label for="date" class="form-label">Date export:</label>
 							<input type="date" id="date" class="form-control" name="date" placeholder="Enter date">
 						</div>
@@ -89,6 +94,7 @@
 									<th>Name</th>
 									<th>Exporter</th>
 									<th>Quantity</th>
+									<th>Object</th>
 									<th>Date</th>
 								</tr>
 							</thead>
@@ -103,6 +109,9 @@
 										</th>
 										<th>
 											<%=element.quantity%>
+										</th>
+										<th>
+											<%=element.object%>
 										</th>
 										<th>
 											<%=element.removedate%>
