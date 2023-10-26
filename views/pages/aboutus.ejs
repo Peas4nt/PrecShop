@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <title><%=title %></title>
+  </head>
+
+  <body>
+    <%- include("../partials/navbar.ejs") %>
+
+    <h1 class="text-center">How not to make website</h1>
+    <p class="text-center">Made by:</p>
+
+    <div class="d-flex">
+      <ul class="list-inline mx-auto justify-content-center">
+        <li class="list">Vladislavs Teclavs</li>
+        <li class="list">Maksims Lisnojs</li>
+        <li class="list">Eduards Jākobsons</li>
+        <li class="list">Edijs Kalniņš</li>
+        <li class="list">Maksis Grundāns</li>
+      </ul>
+    </div>
+
+    <%-include("../partials/footer.ejs") %>
+  </body>
+</html>

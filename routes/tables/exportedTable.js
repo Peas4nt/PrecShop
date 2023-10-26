@@ -8,6 +8,7 @@ route.get("/tables/exportedProducts/:page?", async (req, res) => {
   storage.name AS "name",
   users.name AS "exporter",
   exported_products.quantity as quantity,
+  exported_products.object as object,
   DATE_FORMAT(remove_date, "%d/%m/%Y") AS "removedate"
   FROM exported_products 
   LEFT JOIN storage 
@@ -29,14 +30,14 @@ route.get("/tables/exportedProducts/:page?", async (req, res) => {
   const endIndex = startIndex + productsPerPage;
   const productsToShow = products.slice(startIndex, endIndex);
   res.render("tables/exportedProducts", {
-		session: req.session.user,
+    session: req.session.user,
     page: "exportedProducts",
     title: "exported Products",
     exported_products: productsToShow,
     pagination: {
       currentPage,
-      productMaxPages
-  }
+      productMaxPages,
+    },
   });
 });
 

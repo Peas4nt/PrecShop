@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="author" content="Maksims Lisnojs" />
+    <meta name="group" content="310" />
+    <meta name="group_name" content="VEMEM" />
+    <meta name="date_created" content="23.10.2023" />
+    <meta name="date_modify" content="23.10.2023" />
+    <title><%=title %></title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" />
+</head>
+
+<body class="" style="height: 100vh">
+    <%- include("../partials/navbar.ejs") %>
+		<div class="container mt-3">
+            <h1 class="text-center">Your Profile</h1>
+                <hr class="divider"></hr>
+
+
+
+			<div class="row row-cols-1 row-cols-lg-2">
+
+				<div class="col">
+                    <h1>Your Information</h1>
+					<hr class="divider">
+
+					<p>Name: <%= user.name%>
+					</p>
+					<p>Last Name: <%=user.lastname%>
+					</p>
+					<p>Email: <%= user.email%>
+					</p>
+
+				
+
+					<hr class="divider">
+
+
+
+
+					
+				</div>
+
+				<div class="col">
+                    <h1>Your Recent Activity</h1>
+                    <hr class="divider">
+					
+					<div class="container mt-3">
+						<h2>Imported Products</h2>
+
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th>Name</th>
+									<th>Quantity</th>
+									<th>Date</th>
+								</tr>
+							</thead>
+							<tbody>
+								<% imported_products.forEach(element=> { %>
+									<tr>
+										<th>
+											<%=element.name%>
+										</th>
+										<th>
+											<%=element.quantity%>
+										</th>
+										<th>
+											<%=element.deliverydate%>
+										</th>
+									</tr>
+									<%}) %>
+							</tbody>
+						</table>
+					</div>
+                    <div class="container mt-3">
+						<h2>Exported Products</h2>
+
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th>Name</th>
+									<th>Quantity</th>
+									<th>Date</th>
+								</tr>
+							</thead>
+							<tbody>
+                                <% exported_products.forEach(element=> { %>
+									<tr>
+										<th>
+											<%=element.name%>
+										</th>
+										<th>
+											<%=element.quantity%>
+										</th>
+										<th>
+											<%=element.RemoveDate%>
+										</th>
+									</tr>
+									<%}) %>
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		<%- include("../partials/footer.ejs") %>
+</body>
+</body>
+
+</html>

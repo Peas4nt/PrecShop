@@ -4,9 +4,9 @@ const db = require("../../db");
 const { checkAuthentication } = require("../../modules/checklogin");
 
 route.get("/storage/product/:id?", async (req, res) => {
-	const prodId = req.params.id ?? 1;
+  const prodId = req.params.id ?? 1;
 
-	const product = await db.getData(`
+  const product = await db.getData(`
     SELECT 
     storage.id, 
     storage.name AS 'name', 
@@ -27,11 +27,12 @@ route.get("/storage/product/:id?", async (req, res) => {
    	WHERE storage.id=${prodId}
     `);
 
-	const exported_products = await db.getData(`
+  const exported_products = await db.getData(`
     SELECT
     storage.name AS "name",
     users.name AS "exporter",
     exported_products.quantity as quantity,
+    exported_products.object as object,
     DATE_FORMAT(remove_date, "%d/%m/%Y") AS "removedate"
     FROM exported_products 
     LEFT JOIN storage 
@@ -41,7 +42,7 @@ route.get("/storage/product/:id?", async (req, res) => {
     WHERE storage.id = ${prodId}
     ORDER BY remove_date DESC`);
 
-	const imported_products = await db.getData(`
+  const imported_products = await db.getData(`
   SELECT 
   storage.name AS "name",
   users.name AS "importer",
@@ -69,34 +70,36 @@ route.get("/storage/product/:id?", async (req, res) => {
 });
 
 route.post("/export/product/", checkAuthentication, async (req, res) => {
-	const quantity = req.body.quantity;
-	const date = req.body.date;
-	const prodId = req.body.prod_id;
-	const userId = req.session.user.id;
+  const quantity = req.body.quantity;
+  const object = req.body.object;
+  const date = req.body.date;
+  const prodId = req.body.prod_id;
 
-	db.getData(
-		`
+  const userId = req.session.user.id;
+
+  db.getData(
+    `
     UPDATE storage 
 	SET quantity = quantity - ${quantity}
 	WHERE id = ${prodId}
 
-    `,
-	).catch((error) => {
-		console.log("error: ", error);
-		res.status(500).send("Server error");
-	});
+    `
+  ).catch((error) => {
+    console.log("error: ", error);
+    res.status(500).send("Server error");
+  });
 
-	db.insertData(
-		`INSERT INTO exported_products 
-    (quantity,product_id,user_id,remove_date) 
-    VALUES (?,?,?,?)`,
-		[quantity, prodId, userId, date],
-	).catch((error) => {
-		console.log("error: ", error);
-		res.status(500).send("Server error");
-	});
+  db.insertData(
+    `INSERT INTO exported_products 
+    (quantity,object,product_id,user_id,remove_date) 
+    VALUES (?,?,?,?,?)`,
+    [quantity, object, prodId, userId, date]
+  ).catch((error) => {
+    console.log("error: ", error);
+    res.status(500).send("Server error");
+  });
 
-	res.redirect(`/storage/product/${prodId}`);
+  res.redirect(`/storage/product/${prodId}`);
 });
 
 route.put("/storage/product", checkAuthentication, async (req, res) => {

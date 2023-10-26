@@ -136,8 +136,14 @@
 					<form action="/export/product/" method="post">
 						<legend>Export Product</legend>
 						<div class="mb-3">
-							<label for="quantity" class="form-label">Write quantity what you want export:</label>
-							<input type="number" id="quantity" class="form-control" name="quantity" placeholder="Enter quantity">
+							<label for="quantity" class="form-label">Write quantity which you want export:</label>
+							<input type="number" id="quantity" class="form-control" name="quantity"
+								placeholder="Enter quantity">
+						</div>
+
+						<div class="mb-3">
+							<label for="object" class="form-label">Where exported to(Object name):</label>
+							<input type="text" id="object" class="form-control" name="object" placeholder="Enter object name">
 						</div>
 
 						<div class="mb-3">
@@ -162,6 +168,7 @@
 									<th>Name</th>
 									<th>Exporter</th>
 									<th>Quantity</th>
+									<th>Object</th>
 									<th>Date</th>
 								</tr>
 							</thead>
@@ -176,6 +183,9 @@
 										</th>
 										<th>
 											<%=element.quantity%>
+										</th>
+										<th>
+											<%=element.object%>
 										</th>
 										<th>
 											<%=element.removedate%>
