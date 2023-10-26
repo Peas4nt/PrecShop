@@ -100,8 +100,68 @@ route.post("/export/product/", checkAuthentication, async (req, res) => {
 });
 
 route.put("/storage/product", checkAuthentication, async (req, res) => {
-	const { name, serial_num, barcode, type, quantity, cost } = req.body;
-    
+	const { id, name, serial_num, barcode, type, quantity, cost } = req.body;
+
+	await db
+		.getData(
+			`SELECT codes.id AS code_id, codes.barcode AS code FROM storage 
+			LEFT JOIN codes 
+			ON storage.code_id = codes.id
+			WHERE storage.id = ${id}`,
+		)
+		.then((result) => {
+			const barcodeId = result[0].code_id;
+			const barcodeOld = result[0].code
+			db.getData(
+				`SELECT EXISTS(SELECT * FROM codes WHERE barcode = "${barcode}" AND barcode <> "${barcodeOld}") as s`,
+			)
+				.then((result) => {
+					if (result[0].s == 1) {
+						res.status(400).json("That barcode is already in use");
+					} else {
+						db.getData(
+							`UPDATE storage 
+							SET 
+							${type == "" ? "" : `product_tip = ${type},`}
+							name = "${name}",
+							cost = ${cost},
+							quantity = ${quantity},
+							serial_num = "${serial_num}"
+							WHERE id = ${id}
+							`,
+						)
+							.then(() => {
+								db.getData(
+									`UPDATE codes
+										SET 
+										barcode = "${barcode}"
+										WHERE id = ${barcodeId}
+									`,
+								)
+									.then(() => {
+										res.status(200).json(1);
+									})
+									.catch((err) => {
+										console.log("erorr: " + err);
+										res.status(500).json("Server error");
+									});
+							})
+							.catch((err) => {
+								console.log("erorr: " + err);
+								res.status(500).json("Server error");
+							});
+					}
+					
+				})
+				.catch((err) => {
+					console.log("erorr: " + err);
+					res.status(500).json("Server error");
+				});
+		})
+		.catch((err) => {
+			console.log("erorr: " + err);
+			res.status(500).json("Server error");
+		});
 });
 
 route.delete("/storage/product", checkAuthentication, async (req, res) => {

@@ -25,9 +25,12 @@ function deleteQuery(body) {
 			} else {
 				alert(result);
 			}
+		})
+		.catch((err) => {
+			alert("Please login to continue");
+			document.location.href = "/login";
 		});
 }
-
 
 // Edit
 const editStart = document.querySelector(".edit-prod-form");
@@ -60,6 +63,7 @@ form.submit.addEventListener("click", (e) => submit());
 function submit() {
 	console.log("Perfect");
 	const data = {
+		id,
 		name: document.querySelector(".prod-name-input").value,
 		serial_num: document.querySelector(".prod-serial-num-input").value,
 		barcode: document.querySelector(".prod-barcode-input").value,
@@ -67,11 +71,12 @@ function submit() {
 		quantity: document.querySelector(".prod-quantity-input").value,
 		cost: document.querySelector(".prod-cost-input").value,
 	};
-	const body = `name=${data.name}&serial_num=${data.serial_num}&barcode=${data.barcode}&type=${data.type}&quantity=${data.quantity}&cost=${data.cost}`;
+	console.log(data)
+	const body = `id=${data.id}&name=${data.name}&serial_num=${data.serial_num}&barcode=${data.barcode}&type=${data.type}&quantity=${data.quantity}&cost=${data.cost}`;
 	editQuery(body);
 }
 
-// set data to server 
+// set data to server
 function editQuery(body) {
 	fetch("/storage/product", {
 		method: "PUT",
@@ -86,6 +91,10 @@ function editQuery(body) {
 			} else {
 				alert(result);
 			}
+		})
+		.catch((err) => {
+			alert("Please login to continue");
+			document.location.href = "/login";
 		});
 }
 
