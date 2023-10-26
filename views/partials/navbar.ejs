@@ -15,7 +15,7 @@
             <!-- nav menu -->
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link <% if (page === " home") { %> active <% } %>" href="/">Home</a>
+                    <a class="nav-link <% if (page === "home") { %> active <% } %>" href="/">Home</a>
                 </li>
 
                 <li class="nav-item">
@@ -25,24 +25,24 @@
 
 
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle <% if (page === " storage" || page==="importedProducts" ||
+                    <a class="nav-link dropdown-toggle <% if (page === "storage" || page==="importedProducts" ||
                         page==="exportedProducts" ) { %> active <% } %>" href="/storage/" role="button"
                             data-bs-toggle="dropdown"
                             aria-expanded="false">
                             Storage
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item <% if (page === " storage") { %> active <% } %>"
+                        <li><a class="dropdown-item <% if (page === "storage") { %> active <% } %>"
                                     href="/storage/">Storage</a></li>
 
                         <li>
                             <hr class="dropdown-divider">
                         </li>
 
-                        <li><a class="dropdown-item <% if (page === " exportedProducts") { %> active <% } %>"
+                        <li><a class="dropdown-item <% if (page === "exportedProducts") { %> active <% } %>"
                                     href="/tables/exportedProducts/">Exported Products</a></li>
 
-                        <li><a class="dropdown-item <% if (page === " importedProducts") { %> active <% } %>"
+                        <li><a class="dropdown-item <% if (page === "importedProducts") { %> active <% } %>"
                                     href="/tables/importedProducts/">Imported Products</a></li>
                     </ul>
                 </li>
@@ -53,13 +53,15 @@
                     <li class="nav-item dropstart">
                         <a class="nav-link dropdown-toggle" href="/profile" role="button" data-bs-toggle="dropdown"
                             aria-expanded="false">Hi! <%= session.name %></a>
-                        
+
                         <ul class="dropdown-menu">
                             <li>
-                                <a class="dropdown-item" href="/profile">Profile</a>
+                                <a class="dropdown-item <% if (page === "profile") { %> active <% } %>"
+                                        href="/profile">Profile</a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="/settings">Settings</a>
+                                <a class="dropdown-item <% if (page === "settings") { %> active <% } %>"
+                                        href="/settings">Settings</a>
                             </li>
                             <li>
                                 <hr class="dropdown-divider">

@@ -8,7 +8,7 @@ route.get("/settings/", checkAuthentication, async (req, res) => {
   const user = await db.getData(`SELECT * FROM users WHERE id = ${userid}`);
 
   res.render("profile/settings", {
-    session: userid,
+    session: req.session.user,
     page: "settings",
     title: "Settings",
     user: user[0],
@@ -21,7 +21,7 @@ route.post("/settings/", checkAuthentication, async (req, res) => {
   const lastname = req.body.lastname;
   const email = req.body.email;
   const password = req.body.password;
-  console.log(name, lastname, email, password, userid);
+  // console.log(name, lastname, email, password, userid);
   // await db.insertData(
   //   `UPDATE users
   // 	SET
@@ -45,7 +45,7 @@ route.post("/settings/", checkAuthentication, async (req, res) => {
       userid +
       "'"
   );
-  res.redirect("profile/");
+  res.redirect("/profile/");
 });
 
 module.exports = route;
