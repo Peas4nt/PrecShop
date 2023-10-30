@@ -15,14 +15,24 @@ class DBmysql {
 	}
 
 	connectToDB() {
-		this.#conn = mysql.createPool({
-			connectionLimit: 5,
-			host: this.#host,
-			user: this.#user,
-			database: this.#db,
-			password: this.#password,
-			ssl: {},
-		});
+		if (this.#host == "localhost") {
+			this.#conn = mysql.createPool({
+				connectionLimit: 5,
+				host: this.#host,
+				user: this.#user,
+				database: this.#db,
+				password: this.#password,
+			});
+		} else {
+			this.#conn = mysql.createPool({
+				connectionLimit: 5,
+				host: this.#host,
+				user: this.#user,
+				database: this.#db,
+				password: this.#password,
+				ssl: {},
+			});
+		}
 	}
 
 	dbOff() {

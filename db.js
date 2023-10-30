@@ -6,7 +6,7 @@ const db = new DBmysql(
   process.env.DB_HOST,
   process.env.DB_USERNAME,
   process.env.DB_NAME,
-  process.env.DB_PASSWORd
+  process.env.DB_PASSWORD
 );
 
 module.exports = db;
