@@ -3,6 +3,7 @@ const route = Router();
 const db = require("../../db");
 const { checkAuthentication } = require("../../modules/checklogin");
 
+// renderē produkta lapu un kaut kādi sql query
 route.get("/storage/product/:id?", async (req, res) => {
   const prodId = req.params.id ?? 1;
 
@@ -69,6 +70,7 @@ route.get("/storage/product/:id?", async (req, res) => {
 	});
 });
 
+// apstrādā POST pieprasījumu
 route.post("/export/product/", checkAuthentication, async (req, res) => {
   const quantity = req.body.quantity;
   const object = req.body.object;
@@ -77,6 +79,7 @@ route.post("/export/product/", checkAuthentication, async (req, res) => {
 
   const userId = req.session.user.id;
 
+  // sql query 
   db.getData(
     `
     UPDATE storage 
@@ -89,6 +92,7 @@ route.post("/export/product/", checkAuthentication, async (req, res) => {
     res.status(500).send("Server error");
   });
 
+  // sql query 
   db.insertData(
     `INSERT INTO exported_products 
     (quantity,object,product_id,user_id,remove_date) 
@@ -98,10 +102,11 @@ route.post("/export/product/", checkAuthentication, async (req, res) => {
     console.log("error: ", error);
     res.status(500).send("Server error");
   });
-
+// novirza uz produkta lapu
   res.redirect(`/storage/product/${prodId}`);
 });
 
+// edit pieprasījuma apstrāde
 route.put("/storage/product", checkAuthentication, async (req, res) => {
 	const { id, name, serial_num, barcode, type, quantity, cost } = req.body;
 
@@ -167,6 +172,7 @@ route.put("/storage/product", checkAuthentication, async (req, res) => {
 		});
 });
 
+// delete pieprasījuma apstrāde
 route.delete("/storage/product", checkAuthentication, async (req, res) => {
 	const prodId = req.body.id;
 	await db

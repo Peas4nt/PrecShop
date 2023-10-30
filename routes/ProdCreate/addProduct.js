@@ -5,10 +5,11 @@ const route = Router();
 const db = require("../../db");
 const { checkAuthentication } = require("../../modules/checklogin");
 
-
+// renderē add product lapu
 route.get("/add/product/:barcode", checkAuthentication, async (req, res) => {
 	const code = req.params.barcode;
 
+	// sql query
 	await db
 		.getData(
 			`
@@ -38,6 +39,7 @@ route.get("/add/product/:barcode", checkAuthentication, async (req, res) => {
 		});
 });
 
+// apstrādā POST pieprasījumu
 route.post("/add/product", checkAuthentication, async (req, res) => {
 	const userId = req.session.user.id;
 	const product_id = req.body.product_id;
@@ -45,16 +47,19 @@ route.post("/add/product", checkAuthentication, async (req, res) => {
 	const quantity = req.body.quantity;
 	console.log(product_id);
 
+	// sql update query
 	await db.getData(
 		`
 	UPDATE storage 
 	SET quantity = quantity + ${quantity}
 	WHERE id = ${product_id}`
 	);
+	// sql query kas importe datus DB
 	await db.insertData(
 		"INSERT INTO imported_products (product_id, user_id, quantity, delivery_date) VALUES (?,?,?,?)",
 		[product_id, userId, quantity, import_date]
 	);
+	// novirza uz produkta lapu
 	res.redirect(`/storage/product/${product_id}`);
 });
 

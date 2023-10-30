@@ -3,9 +3,11 @@ const route = Router();
 const db = require("../../db");
 const { checkAuthentication } = require("../../modules/checklogin");
 
+// renderē create product lapu
 route.get("/create/product/:barcode", checkAuthentication, async (req, res) => {
 	const barcode = req.params.barcode;
 
+	// sql query, kas izvelas visus produktu tipus
 	const types = await db.getData("SELECT id,name FROM products_tips");
 	res.render("create product/product_create", {
 		session: req.session.user,
@@ -16,6 +18,7 @@ route.get("/create/product/:barcode", checkAuthentication, async (req, res) => {
 	});
 });
 
+// apstrādā POST pieprasījumu
 route.post("/create/product", checkAuthentication, async (req, res) => {
 	const code = req.body.prod_code;
 	const userId = req.session.user.id;
@@ -28,6 +31,7 @@ route.post("/create/product", checkAuthentication, async (req, res) => {
 
 	const imDate = req.body.import_date;
 
+	// sql query 
 	await db
 		.getData(
 			"SELECT EXISTS(SELECT * FROM codes WHERE barcode = '" +
@@ -55,9 +59,11 @@ route.post("/create/product", checkAuthentication, async (req, res) => {
 						)
 							.then((result) => {
 								const prodId = result.id;
+								// novirza uz jauna produkta lapu
 								res.redirect(
 									`/storage/product/${prodId}`,
 								);
+								// sql query, lai ievietot jaunu ierakst imported products tabulā
 								db.insertData(
 									"INSERT INTO imported_products (product_id, user_id, quantity, delivery_date) VALUES (?,?,?,?)",
 									[prodId, userId, quantity, imDate],

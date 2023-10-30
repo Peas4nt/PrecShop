@@ -3,8 +3,10 @@ const route = Router();
 const db = require("../../db");
 const { checkAuthentication } = require("../../modules/checklogin");
 
+// renderē settings lapu
 route.get("/settings/", checkAuthentication, async (req, res) => {
   const userid = req.session.user.id;
+  // sql query
   const user = await db.getData(`SELECT * FROM users WHERE id = ${userid}`);
 
   res.render("profile/settings", {
@@ -21,17 +23,8 @@ route.post("/settings/", checkAuthentication, async (req, res) => {
   const lastname = req.body.lastname;
   const email = req.body.email;
   const password = req.body.password;
-  // console.log(name, lastname, email, password, userid);
-  // await db.insertData(
-  //   `UPDATE users
-  // 	SET
-  // 	name = ${name},
-  // 	lastname = ${lastname},
-  // 	email = ${email},
-  // 	password = ${password}
-  // 	WHERE id = ${userid}
-  // 	`
-  // );
+
+  // sql query
   await db.insertData(
     "UPDATE users SET name = '" +
       name +
@@ -45,6 +38,7 @@ route.post("/settings/", checkAuthentication, async (req, res) => {
       userid +
       "'"
   );
+  // novirza uz profilu
   res.redirect("/profile/");
 });
 

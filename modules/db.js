@@ -36,6 +36,7 @@ class DBmysql {
 			});
 	}
 
+	// funkcija, kas apstrādā sql select pieprasījumu
 	getData(sql) {
 		return this.#conn
 			.execute(sql)
@@ -50,6 +51,7 @@ class DBmysql {
 			});
 	}
 
+	// funkcija, kas apstrādā sql insert pieprasījumu
 	insertData(sql, data) {
 		return this.#conn
 			.execute(sql, data)

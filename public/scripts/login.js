@@ -1,3 +1,4 @@
+// pārbauda login datus un pārsuta to serverim
 const login = document.querySelector(".login");
 login.addEventListener("submit", function (event) {
 	event.preventDefault();

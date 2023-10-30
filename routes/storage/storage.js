@@ -2,6 +2,7 @@ const { Router } = require("express");
 const route = Router();
 const db = require("../../db");
 
+// renderē storage lapu un izvada visus produktus
 route.get("/storage/", async (req, res) => {
 	const search = req.query.query || "";
 	const currentPage = parseInt(req.query.page, 10) || 1;

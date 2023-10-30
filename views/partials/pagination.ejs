@@ -2,12 +2,12 @@
     <ul class="pagination justify-content-center">
 
 
-
+        <!-- cik elementu katrā lapā -->
         <% const maxPagesToShow = 4; %>
         <% const startPage = Math.max(pagination.currentPage - maxPagesToShow, 1); %>
         <% const endPage = Math.min(parseInt(pagination.currentPage) + parseInt(maxPagesToShow), pagination.productMaxPages); %>
         
-
+        <!-- pirma lapa -->
         <% if (pagination.currentPage > 1) { %>
             <% if (pagination.currentPage - maxPagesToShow > 1) { %>
                 <li class="page-item"><a class="page-link" href="?query=<%= pagination.search %>&page=1">...</a></li>

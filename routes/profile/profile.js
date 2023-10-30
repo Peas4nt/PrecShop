@@ -3,11 +3,14 @@ const route = Router();
 const db = require("../../db");
 const { checkAuthentication } = require("../../modules/checklogin");
 
+// renderē profila lapu
 route.get("/profile/:id?", checkAuthentication, async (req, res) => {
   const userid = req.params.id ?? req.session.user.id;
+  // sql query 
   const user = await db.getData(
     `SELECT name,lastname,email FROM users WHERE id = ${userid}`
   );
+  // sql query no imported products
   const imported_products = await db.getData(
     `
 	SELECT 
@@ -23,6 +26,7 @@ route.get("/profile/:id?", checkAuthentication, async (req, res) => {
   ORDER BY delivery_date DESC
   `
   );
+  // sql query no exported products
   const exported_products = await db.getData(
     `
 	SELECT 

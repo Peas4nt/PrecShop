@@ -2,6 +2,7 @@ const { Router } = require("express");
 const db = require("../../db");
 const route = Router();
 
+// renderē login lapu
 route.get("/login", (req, res) => {
 	res.render("login/login", {
 		session: req.session.user,
@@ -10,10 +11,12 @@ route.get("/login", (req, res) => {
 	});
 });
 
+// apstrādā POST pieprasījumu
 route.post("/login", async (req, res) => {
 	const email = req.body.email;
 	const password = req.body.password;
 
+	// sql query lai pārbaudit vai akkaunts eksistē
 	await db
 		.getData(
 			`SELECT id, name, lastname, email FROM users WHERE email='${email}' AND password ='${password}' LIMIT 1`

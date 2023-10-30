@@ -1,3 +1,4 @@
+// saglabā datus no formas
 const form = document.querySelector(".singup-form");
 
 form.addEventListener("submit", (e) => {
@@ -14,6 +15,7 @@ form.addEventListener("submit", (e) => {
 	}
 });
 
+// Pārbauda var paroles ir vienādas
 function checkPassword(form) {
 	const password1 = form.password1.value;
 	const password2 = form.password2.value;
@@ -25,6 +27,7 @@ function checkPassword(form) {
 	return true
 }
 
+// pārsūta saglabātus datus uz serveri
 function postQuery(body) {
 	fetch("/signup", {
 		method: "POST",

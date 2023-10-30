@@ -1,11 +1,14 @@
+// moduļu importēšana
 const express = require("express");
 const session = require("express-session");
 const path = require("path");
 const fs = require("fs");
 const db = require("./db");
 
+// datubāze konfigurācija
 require("dotenv").config();
 
+// ports uz kura strādā website
 const PORT = process.env.PORT || 3000;
 
 const app = express();
@@ -14,8 +17,10 @@ app.use(express.urlencoded({ extended: true }));
 
 // set view engine
 app.set("view engine", "ejs");
+// public:)
 app.use(express.static("public"));
 
+// sessija
 app.use(
 	session({
 		secret: "qwerty",
@@ -47,4 +52,5 @@ const start = () => {
 	});
 };
 
+// starts
 start();

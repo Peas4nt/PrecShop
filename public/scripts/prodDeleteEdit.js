@@ -1,3 +1,4 @@
+// delete
 const deleteForm = document.querySelector(".delete-prod-form");
 
 deleteForm.addEventListener("submit", (e) => {

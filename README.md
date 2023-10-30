@@ -1,1 +1,1 @@
-# Start Komanda - npm run dev
+# Start Komanda - npm run start

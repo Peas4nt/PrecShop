@@ -2,6 +2,7 @@ const { Router } = require("express");
 const route = Router();
 const db = require("../../db")
 
+// renderē imported products lapu un izvada visus produktus tabulā
 route.get("/tables/importedProducts/:page?", async (req, res) => {
   const products = await db.getData(`
   SELECT 

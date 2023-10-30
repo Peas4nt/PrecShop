@@ -1,90 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="Vladislavs Teclavs" />
+    <meta name="group" content="310" />
+    <meta name="group_name" content="VEMEM" />
+    <meta name="date_created" content="13.09.2023" />
+    <meta name="date_modify" content="29.10.2023" />
 
-<head>
-	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="author" content="Vladislavs Teclavs" />
-	<meta name="group" content="310" />
-	<meta name="group_name" content="VEMEM" />
-	<meta name="date_created" content="13.09.2023" />
-	<meta name="date_modify" content="29.10.2023" />
-  <link rel="stylesheet" href="/styles/global.css">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles/global.css" />
+    <title><%=title %></title>
+  </head>
 
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" />
-	<title>
-		<%=title %>
-	</title>
-</head>
+  <body>
+    <%- include("../partials/navbar.ejs") %>
 
-<body>
-	<%- include("../partials/navbar.ejs") %>
+    <div class="container d-flex flex-column justify-content-center">
+      <form
+        class="d-flex m-0 me-3 pt-4"
+        role="search"
+        method="get"
+        action="/storage/"
+      >
+        <input
+          class="form-control me-2v search"
+          type="search"
+          placeholder="Search"
+          aria-label="Search"
+          name="query"
+          id="search"
+          value="<%= pagination.search %>"
+        />
+        <button class="btn btn-outline-success" type="submit">Search</button>
+        
+      </form>
 
-		<div class="container d-flex flex-column justify-content-center">
+      <!-- foreach lai izvadīt visus produktus -->
+      <% if (products.length < 1) { %>
+      <h3>NO DATA</h3>
+      <% } else { %> <% products.forEach(element=> { %>
 
-			<form class="d-flex m-0 me-3 pt-4" role="search" method="get" action="/storage/">
-				<input class="form-control me-2v search" type="search" placeholder="Search" aria-label="Search"
-					name="query" id="search" value="<%= pagination.search %>" />
-				<button class="btn btn-outline-success" type="submit">Search</button>
-			</form>
+        <!-- produkts -->
+      <div class="card m-3">
+        <div class="row p-1">
+          <div
+            class="col-md-3 d-flex justify-content-center align-items-center"
+          >
+            <svg id="barcode<%=element.id %>" class="img-fluid"></svg>
+          </div>
 
-			<% if (products.length < 1) { %>
-				<h3>NO DATA</h3>
-				<% } else { %>
-					<% products.forEach(element=> { %>
+          <div class="col-md-6">
+            <div class="card-body">
+              <h5 class="card-title"><%=element.name %></h5>
 
-						<div class="card m-3">
-							<div class="row p-1">
-								<div class="col-md-3 d-flex justify-content-center align-items-center">
-									<svg id="barcode<%=element.id %>" class="img-fluid"></svg>
-								</div>
+              
+              <p class="card-text">
+                type: <%=element.type %><br />
+                quantuty: <%=element.quantity %><br />
+                serial num: <%=element.serial_num %>
+              </p>
 
-								<div class="col-md-6">
-									<div class="card-body">
-										<h5 class="card-title">
-											<%=element.name %>
-										</h5>
+              <p class="card-text">
+                <small class="text-body-secondary"
+                  >Author: <%=element.user %></small
+                >
+              </p>
+            </div>
+          </div>
 
-										<p class="card-text">
-											type: <%=element.type %><br />
-												quantuty: <%=element.quantity %><br />
-													serial num: <%=element.serial_num %>
-										</p>
+          <div
+            class="col d-flex flex-column justify-content-center align-items-center"
+          >
+            <h1 class="m-2">$<%=element.cost %></h1>
+            <a
+              class="btn btn-outline-info btn-lg"
+              href="/storage/product/<%=element.id %>"
+              >Buy</a
+            >
+          </div>
+        </div>
+      </div>
 
-										<p class="card-text">
-											<small class="text-body-secondary">Author: <%=element.user %></small>
-										</p>
-									</div>
-								</div>
+      <% }) %> <% } %> <%- include("../partials/pagination.ejs") %>
+    </div>
 
-								<div class="col d-flex flex-column justify-content-center align-items-center">
-									<h1 class="m-2">$<%=element.cost %>
-									</h1>
-									<a class="btn btn-outline-info btn-lg"
-										href="/storage/product/<%=element.id %>">Buy</a>
-								</div>
-							</div>
-						</div>
+    <%- include("../partials/footer.ejs") %>
+  </body>
+  <script src="https://unpkg.com/jsbarcode@latest/dist/JsBarcode.all.min.js"></script>
+  <script>
+    let products = JSON.parse(`<%- JSON.stringify(products) %>`);
 
-						<% }) %>
-							<% } %>
-
-
-								<%- include("../partials/pagination.ejs") %>
-		</div>
-
-		<%- include("../partials/footer.ejs") %>
-</body>
-<script src="https://unpkg.com/jsbarcode@latest/dist/JsBarcode.all.min.js"></script>
-<script>
-
-	let products = JSON.parse(`<%- JSON.stringify(products) %>`);
-
-	products.forEach((element) => {
-		JsBarcode(`#barcode${element.id}`, element.barcode);
-	});
-
-
-</script>
-
+    products.forEach((element) => {
+      JsBarcode(`#barcode${element.id}`, element.barcode);
+    });
+  </script>
 </html>

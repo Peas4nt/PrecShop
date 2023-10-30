@@ -2,6 +2,7 @@ const { Router } = require("express");
 const route = Router();
 const db = require("../../db");
 
+// renderē sign up lapu
 route.get("/signup", (req, res) => {
 	res.render("login/signup", {
 		session: req.session.user,
@@ -10,6 +11,7 @@ route.get("/signup", (req, res) => {
 	});
 });
 
+// apstrādā POST pieprasījumu
 route.post("/signup", async (req, res) => {
 	const name = req.body.name;
 	const lastname = req.body.lastname;
@@ -17,6 +19,7 @@ route.post("/signup", async (req, res) => {
 	const password = req.body.password;
 
 	await db
+	// sql query lai pārbaudit vai lietotājs neeksistē
 		.getData(
 			"SELECT EXISTS(SELECT email FROM users WHERE email = '" +
 				email +
@@ -26,6 +29,7 @@ route.post("/signup", async (req, res) => {
 			if (result[0].s === 1) {
 				return res.status(400).json("User already exists");
 			} else {
+				// sql query lai ievietot datus DB
 				db.insertData(
 					"INSERT INTO users(name,lastname,email,password) VALUES (?, ?, ?, ?)",
 					[name, lastname, email, password],
