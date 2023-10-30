@@ -29,7 +29,7 @@ route.get("/storage/", async (req, res) => {
   `;
 	if (search != "") {
 		products = await db
-			.getData(sql + `WHERE storage.name LIKE '%${search}%'`)
+			.getData(sql + `WHERE storage.name LIKE '%${search}%' OR codes.barcode LIKE '%${search}%'`)
 			.catch((error) => {
 				console.log("error: ", error);
 				res.status(500).send("Server error");
