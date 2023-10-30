@@ -1,10 +1,13 @@
 const { Router } = require("express");
 const route = Router();
-const db = require("../../db")
+const db = require("../../db");
 
 // renderē imported products lapu un izvada visus produktus tabulā
 route.get("/tables/importedProducts/:page?", async (req, res) => {
-  const products = await db.getData(`
+	// current page
+	const currentPage = parseInt(req.query.page, 10) || 1;
+
+	const products = await db.getData(`
   SELECT 
   storage.name AS "name",
   users.name AS "importer",
@@ -15,29 +18,26 @@ route.get("/tables/importedProducts/:page?", async (req, res) => {
   ON imported_products.product_id = storage.id
   LEFT JOIN users
   ON imported_products.user_id = users.id
-  ORDER BY delivery_date DESC`
-  );
-    
-  const productsPerPage = 10;
-  const productMaxPages = Math.ceil(products.length / productsPerPage);
-  // current page
-  const currentPage = (!req.params.page || req.params.page > productMaxPages || req.params.page < 1)? 1 : req.params.page;
+  ORDER BY delivery_date DESC`);
 
-  // array indexes
-  const startIndex = (currentPage - 1) * productsPerPage;
-  const endIndex = startIndex + productsPerPage;
-  const productsToShow = products.slice(startIndex, endIndex)
+	const productsPerPage = 10;
+	const productMaxPages = Math.ceil(products.length / productsPerPage);
 
-  res.render("tables/importedProducts", {
+	// array indexes
+	const startIndex = (currentPage - 1) * productsPerPage;
+	const endIndex = startIndex + productsPerPage;
+	const productsToShow = products.slice(startIndex, endIndex);
+
+	res.render("tables/importedProducts", {
 		session: req.session.user,
-    page: "importedProducts",
-    title: "imported Products",
-    imported_products: productsToShow,
-    pagination: {
-      currentPage,
-      productMaxPages
-    }
-  });
+		page: "importedProducts",
+		title: "imported Products",
+		imported_products: productsToShow,
+		pagination: {
+			currentPage,
+			productMaxPages,
+		},
+	});
 });
 
 module.exports = route;
