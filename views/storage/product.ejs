@@ -142,17 +142,17 @@
 						<div class="mb-3">
 							<label for="quantity" class="form-label">Write quantity which you want export:</label>
 							<input type="number" id="quantity" class="form-control" name="quantity"
-								placeholder="Enter quantity">
+								placeholder="Enter quantity" max="<%=prod.quantity%>" required>
 						</div>
 
 						<div class="mb-3">
 							<label for="object" class="form-label">Where exported to(Object name):</label>
-							<input type="text" id="object" class="form-control" name="object" placeholder="Enter object name">
+							<input type="text" id="object" class="form-control" name="object" placeholder="Enter object name" required>
 						</div>
 
 						<div class="mb-3">
 							<label for="date" class="form-label">Date export:</label>
-							<input type="date" id="date" class="form-control" name="date" placeholder="Enter date">
+							<input type="date" id="date" class="form-control" name="date" placeholder="Enter date" required>
 						</div>
 
 						<input type="hidden" name="prod_id" value="<%= prod.id %>">
